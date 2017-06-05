@@ -3,11 +3,13 @@ package sarojbardewa.com.cookhook;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 // This uses recycler view to display the list of books
 public class BookListFragment extends Fragment {
@@ -27,6 +29,9 @@ public class BookListFragment extends Fragment {
             R.drawable.and_engine_top_card
     };
 
+    //**** As per the suggestion from SO
+    CoordinatorLayout.Behavior behavior;
+    //***
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -88,6 +93,17 @@ public class BookListFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        // ************From SO
+        if(behavior != null)
+            return;
+
+        FrameLayout layout =(FrameLayout) getActivity().findViewById(R.id.dashboard_content);
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) layout.getLayoutParams();
+
+        behavior = params.getBehavior();
+        params.setBehavior(null);
+        //**********************
+
         try {
             mListener = (OnSelectedBookChangeListener) activity;
         } catch (ClassCastException e) {
@@ -100,6 +116,19 @@ public class BookListFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        //*************
+        if(behavior == null)
+            return;
+
+        FrameLayout layout =(FrameLayout) getActivity().findViewById(R.id.dashboard_content);
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) layout.getLayoutParams();
+
+        params.setBehavior(behavior);
+
+        layout.setLayoutParams(params);
+
+        behavior = null;
+        //****************
     }
 
 }

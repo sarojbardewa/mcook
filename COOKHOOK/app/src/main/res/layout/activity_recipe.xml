@@ -11,9 +11,9 @@
 
     <!-- This contains the main fragment that slides in from the left -->
     <include
-        layout="@layout/app_bar_recipe"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    layout="@layout/app_bar_recipe"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
