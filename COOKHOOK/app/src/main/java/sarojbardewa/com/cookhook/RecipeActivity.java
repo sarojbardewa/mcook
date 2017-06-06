@@ -74,7 +74,7 @@ public class RecipeActivity extends AppCompatActivity
         fm.beginTransaction()
                 .add(R.id.dashboard_content, listFragment)
                 .commit();
-//        //***********commit
+        //***********commit
     }
 
     @Override
@@ -173,4 +173,6 @@ public class RecipeActivity extends AppCompatActivity
     }
 
     //*********
+
+
 }

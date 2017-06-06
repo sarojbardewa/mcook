@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 // This uses recycler view to display the list of books
 public class BookListFragment extends Fragment {
@@ -93,16 +93,7 @@ public class BookListFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        // ************From SO
-        if(behavior != null)
-            return;
-
-        FrameLayout layout =(FrameLayout) getActivity().findViewById(R.id.dashboard_content);
-        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) layout.getLayoutParams();
-
-        behavior = params.getBehavior();
-        params.setBehavior(null);
-        //**********************
+        Log.i("FRAGMENT", "BookListFragment onAttach() called");
 
         try {
             mListener = (OnSelectedBookChangeListener) activity;
@@ -115,20 +106,9 @@ public class BookListFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        Log.i("FRAGMENT", "BookListFragment onDetach() called");
         mListener = null;
         //*************
-        if(behavior == null)
-            return;
-
-        FrameLayout layout =(FrameLayout) getActivity().findViewById(R.id.dashboard_content);
-        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) layout.getLayoutParams();
-
-        params.setBehavior(behavior);
-
-        layout.setLayoutParams(params);
-
-        behavior = null;
-        //****************
     }
 
 }
