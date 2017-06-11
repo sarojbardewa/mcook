@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="sarojbardewa.com.cookhookpro">
-
-
+    
     <application
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:allowBackup="true"
@@ -15,11 +14,6 @@
             android:name="sarojbardewa.com.cookhookpro.mainrecipescreen.RecipeActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
         <!--Activities for New Recipe activity -->
@@ -36,6 +30,18 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
+        <!-- Activities for Login and Splash Screens -->
+        <activity android:name="sarojbardewa.com.cookhookpro.loginandsplashscreens.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="sarojbardewa.com.cookhookpro.loginandsplashscreens.LoginActivity"></activity>
+        <activity android:name="sarojbardewa.com.cookhookpro.loginandsplashscreens.SignUPActivity"></activity>
+        <activity
+            android:name="sarojbardewa.com.cookhookpro.loginandsplashscreens.ShoppingListActivity"
+            android:label="@string/title_activity_shopping_list"></activity>
 
 
     </application>
