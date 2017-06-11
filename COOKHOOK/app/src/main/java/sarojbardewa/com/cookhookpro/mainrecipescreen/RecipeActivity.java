@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.newrecipe.NewRecipeActivity;
@@ -133,6 +134,9 @@ public class RecipeActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.sign_out) {
+
+            // Display success toast messgage
+            Toast.makeText(getApplicationContext(), "User signed out successfully", Toast.LENGTH_SHORT).show();
 
 
         } else if (id == R.id.nav_share) {
