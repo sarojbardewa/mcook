@@ -6,6 +6,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -29,6 +30,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,8 +124,11 @@ public class NewRecipeActivity extends AppCompatActivity {
             imgUri = data.getData();
 
             try{
-                Bitmap bm = MediaStore.Images.Media.getBitmap(getContentResolver(), imgUri);
-                mImageView.setImageBitmap(bm);
+                InputStream inputStream = getContentResolver().openInputStream(imgUri);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                mImageView.setImageBitmap(bitmap);
+//                Bitmap bm = MediaStore.Images.Media.getBitmap(getContentResolver(), imgUri);
+//                mImageView.setImageBitmap(bm);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
