@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "901465321299-3g3hrumfd4sd68b7dp83j42pll9697g7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sarojbardewa.com.cookhookpro",
+            "certificate_hash": "9cb0753eda78689f55f0aeb6b4a242ee2c84274b"
+          }
+        },
+        {
           "client_id": "901465321299-9tjj5kjieuee5ulgpu0mq58rn1vpgt82.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
