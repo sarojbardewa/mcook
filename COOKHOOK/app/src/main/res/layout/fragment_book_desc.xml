@@ -10,8 +10,8 @@
     <!--android:paddingTop="@dimen/activity_vertical_margin"-->
     <ImageView
         android:scaleType="fitCenter"
-        android:layout_width="228dp"
-        android:layout_height="281dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:id="@+id/topImage"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -30,13 +30,38 @@
         <!--android:src="@drawable/maryland_fried_chicken_with_creamy_gravy_tc"-->
         <!--android:transitionName="book_image"/>-->
 
+    <!-- Create a linear layout to show time it takes to make the recipe and user
+    information -->
+    <LinearLayout
+        android:id="@+id/time_chef_layout"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_below="@+id/topImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Time"
+            android:id="@+id/time_desp_textview"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Recipe By"
+            android:id="@+id/recipe_by_button"/>
+
+    </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Improving User Interface Design with Android Fragments"
         android:id="@+id/bookTitle"
-        android:layout_below="@+id/topImage"
+        android:layout_below="@+id/time_chef_layout"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -47,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="This book introduces readers to Fragments, the specific scenarios Fragments address and how to use them. The book will take the reader from the basics of using Fragments, through their use in creating more adaptive and dynamic user experiences. The book teaches readers how to capitalize on many of the built-in UI features that are available through Fragments such list-based navigation, tab-based navigation, and layout adaptation, as well as how to customize an app’s UI behavior by directly managing the creation, appearance, and flow of individual Fragments."
+        android:hint="Field for recipe description"
         android:id="@+id/bookDescription"
         android:layout_below="@+id/bookTitle"
         android:layout_marginTop="@dimen/activity_vertical_margin"
