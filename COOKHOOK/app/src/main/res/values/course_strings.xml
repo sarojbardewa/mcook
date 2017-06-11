@@ -2,21 +2,21 @@
 <resources>
 
 <!-- Books  -->
-  <string name="dynamicUITitle">Creating Dynamic UI with Android Fragments</string>
-  <string name="dynamicUiTitleShort">Fragments</string>
-  <string name="dynamicUiDescription">Shows you how to use fragments to create engaging apps that provide a rich user interface that dynamically adapts to the individual characteristics of both tablets and smartphones, and incorporates the latest features of Material Design.</string>
+  <string name="dynamicUITitle">Quick Chicken Nuggets</string>
+  <string name="dynamicUiTitleShort">Family Circle</string>
+  <string name="dynamicUiDescription">These breaded chicken tenders are served with a mustard and mayonnaise mixture for dipping. Serve steamed green beans with this recipe for a quick-and-easy family meal.</string>
 
-  <string name="androidSysDevTitle">Instant Android Systems Development How-to</string>
-  <string name="androidSysDevTitleShort">Android SysDev</string>
-  <string name="androidSysDevDescription">Provides a gentle introduction to the platform internals without sacrificing depth. Code examples are designed to be meaningful, but at the same time, do not disguise their real purpose, which is to illustrate systems development techniques and common design patterns in android systems programming.</string>
+  <string name="androidSysDevTitle">Grilled Chicken Salad Wraps</string>
+  <string name="androidSysDevTitleShort">Family Circle</string>
+  <string name="androidSysDevDescription">These sandwiches are a popular and simple dinner idea. Replace slices of bread with tortillas and roll up a heaping serving of chicken and vegetables.</string>
 
-  <string name="androidEngineTitle">AndEngine for Android Game Development Cookbook</string>
-  <string name="androidEngineTitleShort">AndEngine</string>
-  <string name="androidEngineDescription">Contains all of the necessary information and examples in order to build the games as you imagine them.</string>
+  <string name="androidEngineTitle">Swiss-Potato Breakfast Casserole</string>
+  <string name="androidEngineTitleShort">Midwest Living</string>
+  <string name="androidEngineDescription">Serve this thyme-flavored, ham, potato, and egg breakfast casserole for brunch or dinner with fresh fruit and juice.</string>
 
-  <string name="androidDbProgTitle">Android Database Programming</string>
-  <string name="androidDbProgTitleShort">Database</string>
-  <string name="androidDbProgDescription">Designed to help developers create and design data-centric mobile applications on Google’s Android platform. As the world goes increasingly mobile and as consumers’ demand for data-centric applications rises, knowing how to combine the two effectively will become an increasingly important asset to have as a developer.</string>
+  <string name="androidDbProgTitle">Maryland Fried Chicken with Creamy Gravy</string>
+  <string name="androidDbProgTitleShort">Better Homes and Gardens</string>
+  <string name="androidDbProgDescription">What sets this fried chicken apart from the typical recipe is that milk is added after partially cooking the chicken so the pieces simmer rather than fry.</string>
 
   <string name="activityMainLabel">Android Books (Fragments)</string>
   <string name="bookIndexErrorMessage">Book Index Value Out Of Range</string>

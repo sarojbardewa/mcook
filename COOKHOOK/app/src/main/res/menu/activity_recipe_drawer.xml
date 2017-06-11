@@ -16,6 +16,11 @@
             android:title="Shopping List"/>
 
         <item
+            android:id="@+id/new_recipe"
+            android:icon="@drawable/ic_recipe_upload_black_24dp"
+            android:title="Upload New Recipe"/>
+
+        <item
             android:id="@+id/sign_out"
             android:icon="@drawable/ic_exit_to_app_black_24dp"
             android:title="Sign out"/>
