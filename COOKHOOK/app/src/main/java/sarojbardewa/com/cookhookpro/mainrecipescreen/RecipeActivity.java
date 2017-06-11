@@ -132,8 +132,8 @@ public class RecipeActivity extends AppCompatActivity
             Intent intent = new Intent(this, NewRecipeActivity.class);
             startActivity(intent);
 
-
         } else if (id == R.id.sign_out) {
+            
 
         } else if (id == R.id.nav_share) {
 
