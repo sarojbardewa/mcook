@@ -12,16 +12,17 @@ import android.widget.TextView;
 import sarojbardewa.com.cookhookpro.R;
 
 
-public class BookDescFragment extends Fragment {
+public class RecipeDescFragment extends Fragment {
 
     private static final String ARG_TITLE = "title";
     private static final String ARG_DESCRIPTION = "description";
     private static final String ARG_IMAGE_ID = "image id";
     private static final String ARG_POSITION = "position";
 
-    public static BookDescFragment newInstance(String title, String description,
-                                               int imageResourceId, int position) {
-        BookDescFragment fragment = new BookDescFragment();
+
+    public static RecipeDescFragment newInstance(String title, String description,
+                                                 int imageResourceId, int position) {
+        RecipeDescFragment fragment = new RecipeDescFragment();
         Bundle args = new Bundle();
         args.putString(ARG_TITLE, title);
         args.putString(ARG_DESCRIPTION, description);
@@ -31,25 +32,25 @@ public class BookDescFragment extends Fragment {
         return fragment;
     }
 
-    public BookDescFragment() {
+    public RecipeDescFragment() {
         // Required empty public constructor
     }
 
      @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         View rootView = inflater.inflate(R.layout.fragment_book_desc, container, false);
+         View rootView = inflater.inflate(R.layout.fragment_recipe_desc, container, false);
 
-         TextView bookTitleView = (TextView)rootView.findViewById(R.id.bookTitle);
-         TextView bookDescriptionView = (TextView)rootView.findViewById(R.id.bookDescription);
+         TextView recipeTitleView = (TextView)rootView.findViewById(R.id.recipeTitle);
+         TextView recipeDescriptionView = (TextView)rootView.findViewById(R.id.recipeDescription);
          ImageView topImageView = (ImageView)rootView.findViewById(R.id.topImage);
 
          Bundle args = getArguments();
          int position = args.getInt(ARG_POSITION);
 
-         bookTitleView.setText(args.getString(ARG_TITLE));
-         //bookTitleView.setTransitionName("title_text_" + position);
-         bookDescriptionView.setText(args.getString(ARG_DESCRIPTION));
+         recipeTitleView.setText(args.getString(ARG_TITLE));
+         //recipeTitleView.setTransitionName("title_text_" + position);
+         recipeDescriptionView.setText(args.getString(ARG_DESCRIPTION));
          topImageView.setImageResource(args.getInt(ARG_IMAGE_ID));
          //topImageView.setTransitionName("book_image_" + position);
 

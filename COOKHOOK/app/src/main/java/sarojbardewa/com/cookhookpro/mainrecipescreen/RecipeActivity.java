@@ -76,7 +76,7 @@ public class RecipeActivity extends AppCompatActivity
         Slide slideLeftTransition = new Slide(Gravity.LEFT);
         slideLeftTransition.setDuration(500);
 
-        BookListFragment listFragment = BookListFragment.newInstance();
+        RecipeListFragment listFragment = RecipeListFragment.newInstance();
         listFragment.setExitTransition(slideLeftTransition);
 
         FragmentManager fm = getFragmentManager();
@@ -153,7 +153,7 @@ public class RecipeActivity extends AppCompatActivity
     @Override
     public void onSelectedBookChanged(View view, int bookIndex) {
 
-        TextView titleTextView = (TextView)view.findViewById(R.id.bookTitle);
+        TextView titleTextView = (TextView)view.findViewById(R.id.recipeTitle);
         ImageView bookImageView = (ImageView)view.findViewById(R.id.topImage);
 
         Slide slideBottomTransition = new Slide(Gravity.BOTTOM);
@@ -168,17 +168,17 @@ public class RecipeActivity extends AppCompatActivity
         transitionSet.addTransition(changeTransformTransition);
         transitionSet.setDuration(500);
 
-        BookDescFragment bookDescFragment =
-                BookDescFragment.newInstance(mTitles[bookIndex], mDescriptions[bookIndex],
+        RecipeDescFragment recipeDescFragment =
+                RecipeDescFragment.newInstance(mTitles[bookIndex], mDescriptions[bookIndex],
                         mImageLargeResourceIds[bookIndex], bookIndex);
-        bookDescFragment.setEnterTransition(slideBottomTransition);
-        bookDescFragment.setAllowEnterTransitionOverlap(false);
-        bookDescFragment.setSharedElementEnterTransition(transitionSet);
+        recipeDescFragment.setEnterTransition(slideBottomTransition);
+        recipeDescFragment.setAllowEnterTransitionOverlap(false);
+        recipeDescFragment.setSharedElementEnterTransition(transitionSet);
 
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.dashboard_content, bookDescFragment)
+                .replace(R.id.dashboard_content, recipeDescFragment)
                 .addSharedElement(bookImageView, "book_image_" + bookIndex)
                 .addSharedElement(titleTextView, "title_text_" + bookIndex)
                 .addToBackStack(null)
