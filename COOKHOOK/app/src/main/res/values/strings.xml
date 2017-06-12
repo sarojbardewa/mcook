@@ -7,6 +7,7 @@
     <string name="action_clear">Clear All</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_password_hint">Password (6 or more characters)</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="create_account">Create Account</string>
