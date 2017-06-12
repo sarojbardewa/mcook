@@ -80,11 +80,7 @@ public class NewRecipeActivity extends AppCompatActivity {
         // Get current user ID
         myUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Log.d(TAG,"CurrentUserID :" + myUserId);
-
-//        Collections.addAll(ingredientList, "Eggs", "Yogurt", "Milk", "Bananas", "Apples", "Tide with bleach", "Cascade");
         directionList = new ArrayList<>();
-    //    Collections.addAll(directionList, "Boil eggs", "Pour Yogurt", " Heat Milk", "Peel Bananas");
-
         //Get the uri if saved before and display the image
         if(savedInstanceState !=null){
             imgUri = savedInstanceState.getParcelable(KEY_INDEX);

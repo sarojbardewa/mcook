@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -250,8 +249,8 @@ public class IngredientListActivity extends AppCompatActivity {
         // If user is adding a new item, show hints, else display the items
         // that already exit
         if(position <0) {
-            mQuantity.setHint("Quantity Eg. 1/2/3 ");
-            mUnits.setHint("Units Eg. ml/lbs/cups");
+            mQuantity.setHint("Quantity Eg. 1/2,3 or na ");
+            mUnits.setHint("Units Eg. ml/lbs/cups or na");
             mItem.setHint("Item Eg.cheese/egg ");
         } else {
                 mQuantity.setText(mQuantityField);
@@ -299,13 +298,7 @@ public class IngredientListActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig)
-    {
-        super.onConfigurationChanged(newConfig);
-        //Rotation kills the dialog. Make a fix if time permitted.
-        Toast.makeText(IngredientListActivity.this,"Android internal configuration changed..", Toast.LENGTH_SHORT).show();
-    }
+
 
 //    /**
 //     * Override the onSaveInstanceState, needed while user changes the orientation.

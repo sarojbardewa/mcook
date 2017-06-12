@@ -23,6 +23,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.loginandsplashscreens.UserProfile;
 import sarojbardewa.com.cookhookpro.newrecipe.NewRecipeActivity;
@@ -31,6 +36,9 @@ public class RecipeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnSelectedBookChangeListener {
 
     //***************
+    private StorageReference mStorageRef;
+    private DatabaseReference mDatabaseRef;
+
     String[] mTitles;
     String[] mDescriptions;
     private final static String TAG = "RecipeActivity";
@@ -46,7 +54,15 @@ public class RecipeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+
         //******************
+        // Create references to the database and image file
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
+
+        //Get the image Url
+        String 
+
         mTitles = getResources().getStringArray(R.array.book_titles);
         mDescriptions = getResources().getStringArray(R.array.book_descriptions);
         //*********************
