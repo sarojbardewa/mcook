@@ -41,7 +41,7 @@ public class SplashActivity extends AppCompatActivity implements Runnable, OnCom
                 profile.Login(userName, password, this);
             }
         }
-        catch (Exception ex) { }
+        catch (Exception ex) { mLoginComplete = true; }
         finally {
             while ((!mLoginComplete) || (((double)(System.currentTimeMillis() - mStartTimeMs)) / 1000 < SplashScreenTime))
             {
