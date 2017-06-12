@@ -56,8 +56,15 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
         if(userName != null && password != null) {
             mUsernameView.setText(userName);
             mPasswordView.setText(password);
-            Toast.makeText(getApplicationContext(), "Account Created Succesfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Account Created Successfully", Toast.LENGTH_SHORT).show();
         }
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UserProfile.getInstance().Logout();
+            }
+        });
     }
 
     @Override

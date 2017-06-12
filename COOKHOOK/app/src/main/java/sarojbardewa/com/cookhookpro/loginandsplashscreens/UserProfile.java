@@ -68,9 +68,8 @@ public class UserProfile {
         mAuth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(listener);
     }
 
-    private void Logout()
+    public void Logout()
     {
-        //TODO: Code to log out of firebase (if needed)
         mAuth.signOut();
         mIsLoggedIn = false;
     }

@@ -41,7 +41,10 @@ public class SplashActivity extends AppCompatActivity implements Runnable, OnCom
                 profile.Login(userName, password, this);
             }
         }
-        catch (Exception ex) { mLoginComplete = true; }
+        catch (Exception ex) {
+            mLoginComplete = true;
+            UserProfile.getInstance().LogoutAndGoToLoginScreen(this);
+        }
         finally {
             while ((!mLoginComplete) || (((double)(System.currentTimeMillis() - mStartTimeMs)) / 1000 < SplashScreenTime))
             {
@@ -58,9 +61,7 @@ public class SplashActivity extends AppCompatActivity implements Runnable, OnCom
             }
             else
             {
-                Intent temp = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(temp);
-                finish();
+                UserProfile.getInstance().LogoutAndGoToLoginScreen(this);
             }
         }
     }
