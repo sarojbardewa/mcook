@@ -40,7 +40,7 @@
         <activity android:name="sarojbardewa.com.cookhookpro.loginandsplashscreens.LoginActivity"></activity>
         <activity android:name="sarojbardewa.com.cookhookpro.loginandsplashscreens.SignUPActivity"></activity>
         <activity
-            android:name="sarojbardewa.com.cookhookpro.loginandsplashscreens.ShoppingListActivity"
+            android:name="sarojbardewa.com.cookhookpro.shoppinglist.ShoppingListActivity"
             android:label="@string/title_activity_shopping_list"></activity>
 
 

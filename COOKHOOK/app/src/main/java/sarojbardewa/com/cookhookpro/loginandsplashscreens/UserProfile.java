@@ -18,14 +18,11 @@ import com.google.firebase.auth.FirebaseUser;
 public class UserProfile {
     private static final UserProfile ourInstance = new UserProfile();
     private boolean mIsLoggedIn;
-    private boolean mLoginComplete, mLoginError;
-    private String mLoginErrorMessage;
     private String mUsername, mPassword;
     private FirebaseUser mFirebaseUser;
 
     //Firebase related authentication
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
 
     private UserProfile() {
         mIsLoggedIn = false;

@@ -1,4 +1,4 @@
-package sarojbardewa.com.cookhookpro.loginandsplashscreens;
+package sarojbardewa.com.cookhookpro.shoppinglist;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import sarojbardewa.com.cookhookpro.R;
+import sarojbardewa.com.cookhookpro.loginandsplashscreens.CheckBoxArrayAdapter;
+import sarojbardewa.com.cookhookpro.loginandsplashscreens.Recipe;
+import sarojbardewa.com.cookhookpro.loginandsplashscreens.UserProfile;
 
 public class ShoppingListActivity extends AppCompatActivity implements View.OnClickListener{
     private ListView mRecipeListView, mIngredientListView;

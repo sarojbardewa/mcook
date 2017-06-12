@@ -12,7 +12,7 @@ import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.mainrecipescreen.RecipeActivity;
 
 public class SplashActivity extends AppCompatActivity implements Runnable, OnCompleteListener<AuthResult> {
-    private static final double SplashScreenTime = 1.0; //Seconds
+    private static final double SplashScreenTime = 1.5; //Seconds
     private long mStartTimeMs;
     private boolean mLoginComplete, mLoginSuccessful;
 
@@ -31,19 +31,20 @@ public class SplashActivity extends AppCompatActivity implements Runnable, OnCom
     @Override
     public void run(){
         SharedPreferenceHelper helper = SharedPreferenceHelper.getInstance(this);
+        UserProfile profile = UserProfile.getInstance();
+        profile.Logout();
         try
         {
             String userName = helper.GetSavedUserName();
             String password = helper.GetSavedPassword();
             if(userName != null && password != null)
             {
-                UserProfile profile = UserProfile.getInstance();
                 profile.Login(userName, password, this);
             }
+            else { throw new Exception("Shouldn't get here, forcing re-login."); }
         }
         catch (Exception ex) {
             mLoginComplete = true;
-            UserProfile.getInstance().LogoutAndGoToLoginScreen(this);
         }
         finally {
             while ((!mLoginComplete) || (((double)(System.currentTimeMillis() - mStartTimeMs)) / 1000 < SplashScreenTime))
@@ -61,7 +62,9 @@ public class SplashActivity extends AppCompatActivity implements Runnable, OnCom
             }
             else
             {
-                UserProfile.getInstance().LogoutAndGoToLoginScreen(this);
+                Intent temp = new Intent(this, LoginActivity.class);
+                startActivity(temp);
+                finish();
             }
         }
     }
