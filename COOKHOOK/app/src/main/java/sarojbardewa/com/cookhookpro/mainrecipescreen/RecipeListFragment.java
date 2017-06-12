@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import sarojbardewa.com.cookhookpro.R;
 
 // This uses recycler view to display the list of books
-public class BookListFragment extends Fragment {
+public class RecipeListFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private OnSelectedBookChangeListener mListener;
@@ -38,18 +38,18 @@ public class BookListFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment BookListFragment.
+     * @return A new instance of fragment RecipeListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BookListFragment newInstance() {
-        BookListFragment fragment = new BookListFragment();
+    public static RecipeListFragment newInstance() {
+        RecipeListFragment fragment = new RecipeListFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
 
         return fragment;
     }
 
-    public BookListFragment() {
+    public RecipeListFragment() {
         // Required empty public constructor
     }
 
@@ -58,7 +58,7 @@ public class BookListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mTitles = getResources().getStringArray(R.array.book_titles);
-        mAdapter = new BookAdapter(mTitles, mImageResourceIds);
+        mAdapter = new RecipeAdapter(mTitles, mImageResourceIds);
 
     }
 
@@ -66,7 +66,7 @@ public class BookListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_book_card, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_recipe_card, container, false);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.book_recycler_view);
 
@@ -95,7 +95,7 @@ public class BookListFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.i("FRAGMENT", "BookListFragment onAttach() called");
+        Log.i("FRAGMENT", "RecipeListFragment onAttach() called");
 
         try {
             mListener = (OnSelectedBookChangeListener) activity;
@@ -108,7 +108,7 @@ public class BookListFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.i("FRAGMENT", "BookListFragment onDetach() called");
+        Log.i("FRAGMENT", "RecipeListFragment onDetach() called");
         mListener = null;
         //*************
     }

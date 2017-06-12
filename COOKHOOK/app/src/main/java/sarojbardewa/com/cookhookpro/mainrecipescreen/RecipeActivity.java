@@ -2,6 +2,7 @@ package sarojbardewa.com.cookhookpro.mainrecipescreen;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -75,7 +76,7 @@ public class RecipeActivity extends AppCompatActivity
         Slide slideLeftTransition = new Slide(Gravity.LEFT);
         slideLeftTransition.setDuration(500);
 
-        BookListFragment listFragment = BookListFragment.newInstance();
+        RecipeListFragment listFragment = RecipeListFragment.newInstance();
         listFragment.setExitTransition(slideLeftTransition);
 
         FragmentManager fm = getFragmentManager();
@@ -152,7 +153,7 @@ public class RecipeActivity extends AppCompatActivity
     @Override
     public void onSelectedBookChanged(View view, int bookIndex) {
 
-        TextView titleTextView = (TextView)view.findViewById(R.id.bookTitle);
+        TextView titleTextView = (TextView)view.findViewById(R.id.recipeTitle);
         ImageView bookImageView = (ImageView)view.findViewById(R.id.topImage);
 
         Slide slideBottomTransition = new Slide(Gravity.BOTTOM);
@@ -167,22 +168,30 @@ public class RecipeActivity extends AppCompatActivity
         transitionSet.addTransition(changeTransformTransition);
         transitionSet.setDuration(500);
 
-        BookDescFragment bookDescFragment =
-                BookDescFragment.newInstance(mTitles[bookIndex], mDescriptions[bookIndex],
+        RecipeDescFragment recipeDescFragment =
+                RecipeDescFragment.newInstance(mTitles[bookIndex], mDescriptions[bookIndex],
                         mImageLargeResourceIds[bookIndex], bookIndex);
-        bookDescFragment.setEnterTransition(slideBottomTransition);
-        bookDescFragment.setAllowEnterTransitionOverlap(false);
-        bookDescFragment.setSharedElementEnterTransition(transitionSet);
+        recipeDescFragment.setEnterTransition(slideBottomTransition);
+        recipeDescFragment.setAllowEnterTransitionOverlap(false);
+        recipeDescFragment.setSharedElementEnterTransition(transitionSet);
 
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.dashboard_content, bookDescFragment)
+                .replace(R.id.dashboard_content, recipeDescFragment)
                 .addSharedElement(bookImageView, "book_image_" + bookIndex)
                 .addSharedElement(titleTextView, "title_text_" + bookIndex)
                 .addToBackStack(null)
                 .commit();
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        //Rotation kills the dialog. Make a fix if time permitted.
+        Toast.makeText(RecipeActivity.this,"Android internal configuration changed..", Toast.LENGTH_SHORT).show();
     }
 
     //*********

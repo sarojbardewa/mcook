@@ -27,6 +27,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.firebase.auth.FirebaseAuth; // Needed to get current user ID.
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,6 +37,7 @@ import java.util.List;
 
 import sarojbardewa.com.cookhookpro.R;
 
+import static android.util.Log.i;
 import static sarojbardewa.com.cookhookpro.R.id.imagename_edittext;
 
 
@@ -52,6 +54,7 @@ public class NewRecipeActivity extends AppCompatActivity {
 
     private Uri imgUri;
     private ProgressDialog dialog;
+    String myUserId;
 
     private static final String TAG ="NewRecipeActivity";
 
@@ -73,6 +76,10 @@ public class NewRecipeActivity extends AppCompatActivity {
         mTotaltime = (EditText)findViewById(R.id.time_edittext);
         mDescription = (EditText)findViewById(R.id.description_edittext);
         ingredientList = new ArrayList<>();
+
+        // Get current user ID
+        myUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Log.d(TAG,"CurrentUserID :" + myUserId);
 
 //        Collections.addAll(ingredientList, "Eggs", "Yogurt", "Milk", "Bananas", "Apples", "Tide with bleach", "Cascade");
         directionList = new ArrayList<>();
@@ -113,14 +120,14 @@ public class NewRecipeActivity extends AppCompatActivity {
     @Override
     protected void  onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-        Log.i(TAG, "onActivityResult() RESULT_OK " + Integer.toString(RESULT_OK));
-        Log.i(TAG, "onActivityResult() RESULT_CANCELED " + Integer.toString(RESULT_CANCELED));
+        i(TAG, "onActivityResult() RESULT_OK " + Integer.toString(RESULT_OK));
+        i(TAG, "onActivityResult() RESULT_CANCELED " + Integer.toString(RESULT_CANCELED));
 
         if(requestCode==REQUEST_CODE && resultCode == RESULT_OK
                 && data !=null && data.getData() !=null){
             Log.d(TAG, " onActivityResult() ImageUri called() ");
-            Log.i(TAG, "onActivityResult() imgUri requestCode" + Integer.toString(requestCode));
-            Log.i(TAG, "onActivityResult() imgUri resultCode " + Integer.toString(resultCode));
+            i(TAG, "onActivityResult() imgUri requestCode" + Integer.toString(requestCode));
+            i(TAG, "onActivityResult() imgUri resultCode " + Integer.toString(resultCode));
             imgUri = data.getData();
 
             try{
@@ -143,8 +150,8 @@ public class NewRecipeActivity extends AppCompatActivity {
             if (data !=null) {
                 ingredientList = IngredientListActivity.getIngrediants(data);
                 Log.d(TAG, "onActivityResult() Ingredient list data not null");
-                Log.i(TAG, "onActivityResult() Ingredient requestCode" + Integer.toString(requestCode));
-                Log.i(TAG, "onActivityResult() Ingredient resultCode " + Integer.toString(resultCode));
+                i(TAG, "onActivityResult() Ingredient requestCode" + Integer.toString(requestCode));
+                i(TAG, "onActivityResult() Ingredient resultCode " + Integer.toString(resultCode));
             } else
             Log.d(TAG, " onActivityResult() Ingredient list  is empty");
         }
@@ -155,8 +162,8 @@ public class NewRecipeActivity extends AppCompatActivity {
             if (data !=null) {
                 directionList = DirectionsListActivity.getDirections(data);
                 Log.d(TAG, "onActivityResult() directions list data not null");
-                Log.i(TAG, "onActivityResult() directions requestCode" + Integer.toString(requestCode));
-                Log.i(TAG, "onActivityResult() directions resultCode " + Integer.toString(resultCode));
+                i(TAG, "onActivityResult() directions requestCode" + Integer.toString(requestCode));
+                i(TAG, "onActivityResult() directions resultCode " + Integer.toString(resultCode));
             } else
                 Log.d(TAG, " onActivityResult() directions list  is empty");
 
@@ -169,6 +176,7 @@ public class NewRecipeActivity extends AppCompatActivity {
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
+
 
     /**
      * For the Publish recipe button
@@ -186,49 +194,52 @@ public class NewRecipeActivity extends AppCompatActivity {
             dialog.show();
 
 
-            // Get teh storage reference
-            StorageReference sRef = mStorageRef.child(STORAGE_PATH +
-                    System.currentTimeMillis() + "." + getImageExt(imgUri));
-            // Add file to reference
-            sRef.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+        // Get teh storage reference
+        StorageReference sRef = mStorageRef.child(STORAGE_PATH +
+                System.currentTimeMillis() + "." + getImageExt(imgUri));
+        // Add file to reference
+        sRef.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                    // Dismiss the dialog
-                    dialog.dismiss();
+                // Dismiss the dialog
+                dialog.dismiss();
 
-                    // Display success toast messgae
-                    Toast.makeText(getApplicationContext(), " Recipe Upload Successful", Toast.LENGTH_SHORT).show();
 
-                    RecipeModel recipeModel = new RecipeModel(mRecipeName.getText().toString(),
-                            taskSnapshot.getDownloadUrl().toString(),
-                            mDescription.getText().toString(),
-                            mTotaltime.getText().toString(),
-                            ingredientList,
-                            directionList);
 
-                    String uploadID = mDatabaseRef.push().getKey();
-                    mDatabaseRef.child("recipes").child(uploadID).setValue(recipeModel);
-                }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+        // Display success toast messgae
+        Toast.makeText(getApplicationContext(), " Recipe Upload Successful", Toast.LENGTH_SHORT).show();
 
-                @Override
-                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    // Show upload progress
-                    double progress = (100 * taskSnapshot.getBytesTransferred())/taskSnapshot.getTotalByteCount();
-                    dialog.setMessage("Uploaded "+ (int)progress+ "");
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    // Dismiss the dialog
-                    dialog.dismiss();
+        RecipeModel recipeModel = new RecipeModel(mRecipeName.getText().toString(),
+                taskSnapshot.getDownloadUrl().toString(),
+                mDescription.getText().toString(),
+                mTotaltime.getText().toString(),
+                ingredientList,
+                directionList,
+                myUserId);
 
-                    // Display success toast messgae
-                    Toast.makeText(getApplicationContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
+                String uploadID = mDatabaseRef.push().getKey();
+                mDatabaseRef.child("recipes").child(uploadID).setValue(recipeModel);
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
 
-                }
-            });
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                // Show upload progress
+                double progress = (100 * taskSnapshot.getBytesTransferred())/taskSnapshot.getTotalByteCount();
+                dialog.setMessage("Uploaded "+ (int)progress+ "");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Dismiss the dialog
+                dialog.dismiss();
+
+                // Display success toast messgae
+                Toast.makeText(getApplicationContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
         } else {
             String message = "";
@@ -269,7 +280,7 @@ public class NewRecipeActivity extends AppCompatActivity {
 
 
     public void addDirections(View v){
-        Log.i("RECIPE","addDirections() called");
+        i("RECIPE","addDirections() called");
         Intent intent = new Intent(this, DirectionsListActivity.class);
         startActivityForResult(intent, REQUEST_DIRECTIONS_CODE);
 
