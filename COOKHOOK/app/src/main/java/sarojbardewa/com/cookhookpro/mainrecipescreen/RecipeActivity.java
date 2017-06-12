@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import sarojbardewa.com.cookhookpro.R;
+import sarojbardewa.com.cookhookpro.loginandsplashscreens.UserProfile;
 import sarojbardewa.com.cookhookpro.newrecipe.NewRecipeActivity;
 
 public class RecipeActivity extends AppCompatActivity
@@ -134,11 +135,7 @@ public class RecipeActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.sign_out) {
-
-            // Display success toast messgage
-            Toast.makeText(getApplicationContext(), "User signed out successfully", Toast.LENGTH_SHORT).show();
-
-
+            UserProfile.getInstance().LogoutAndGoToLoginScreen(this);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

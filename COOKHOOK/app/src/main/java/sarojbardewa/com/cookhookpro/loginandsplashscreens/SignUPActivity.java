@@ -1,5 +1,6 @@
 package sarojbardewa.com.cookhookpro.loginandsplashscreens;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,13 +9,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+
 import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.mainrecipescreen.RecipeActivity;
 
-public class SignUPActivity extends AppCompatActivity
+public class SignUPActivity extends AppCompatActivity implements OnCompleteListener<AuthResult>
 {
     EditText editTextUserName,editTextPassword,editTextConfirmPassword;
     Button btnCreateAccount;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -50,11 +56,10 @@ public class SignUPActivity extends AppCompatActivity
                 {
                     UserProfile user = UserProfile.getInstance();
                     try {
-                        user.CreateAccount(userName, password);
-                        user.Login(userName, password);
-                        Intent temp = new Intent(getApplicationContext(), RecipeActivity.class);
-                        startActivity(temp);
-                        finish();
+                        user.CreateAccount(userName, password, SignUPActivity.this);
+                        dialog = new ProgressDialog(SignUPActivity.this);
+                        dialog.setTitle("Creating account...");
+                        dialog.show();
                     } catch (Exception ex) {
                         Toast.makeText(getApplicationContext(), "Account creation failed: " + ex.getMessage(), Toast.LENGTH_LONG).show();
                     }
@@ -62,5 +67,33 @@ public class SignUPActivity extends AppCompatActivity
 
             }
         });
+    }
+
+    @Override
+    public void onComplete(Task<AuthResult> task)
+    {
+        dialog.dismiss();
+        if(task.isSuccessful())
+        {
+            String userName=editTextUserName.getText().toString();
+            String password=editTextPassword.getText().toString();
+            Intent temp = new Intent(getApplicationContext(), LoginActivity.class);
+            temp.putExtra(LoginActivity.EXTRA_USER_NAME, userName);
+            temp.putExtra(LoginActivity.EXTRA_PASSWORD, password);
+            startActivity(temp);
+            finish();
+        }
+        else
+        {
+            Exception ex = task.getException();
+            if(ex != null)
+            {
+                Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "Account creation failed", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
