@@ -2,6 +2,7 @@ package sarojbardewa.com.cookhookpro.mainrecipescreen;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -183,6 +184,14 @@ public class RecipeActivity extends AppCompatActivity
                 .addToBackStack(null)
                 .commit();
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        //Rotation kills the dialog. Make a fix if time permitted.
+        Toast.makeText(RecipeActivity.this,"Android internal configuration changed..", Toast.LENGTH_SHORT).show();
     }
 
     //*********

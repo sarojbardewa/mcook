@@ -48,10 +48,10 @@ public class BookDescFragment extends Fragment {
          int position = args.getInt(ARG_POSITION);
 
          bookTitleView.setText(args.getString(ARG_TITLE));
-         bookTitleView.setTransitionName("title_text_" + position);
+         //bookTitleView.setTransitionName("title_text_" + position);
          bookDescriptionView.setText(args.getString(ARG_DESCRIPTION));
          topImageView.setImageResource(args.getInt(ARG_IMAGE_ID));
-         topImageView.setTransitionName("book_image_" + position);
+         //topImageView.setTransitionName("book_image_" + position);
 
          return rootView;
     }
