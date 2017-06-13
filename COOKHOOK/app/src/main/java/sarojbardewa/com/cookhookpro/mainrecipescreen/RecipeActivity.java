@@ -34,6 +34,7 @@ import com.google.firebase.storage.StorageReference;
 import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.loginandsplashscreens.UserProfile;
 import sarojbardewa.com.cookhookpro.newrecipe.NewRecipeActivity;
+import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
 
 public class RecipeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnSelectedBookChangeListener {
@@ -179,7 +180,7 @@ public class RecipeActivity extends AppCompatActivity
     //************************
     // TODO : When the book is selected, display the book
     @Override
-    public void onSelectedBookChanged(View view, int bookIndex) {
+    public void onSelectedBookChanged(View view, int bookIndex, RecipeModel recipeModel) {
 
         TextView titleTextView = (TextView)view.findViewById(R.id.recipeTitle);
         ImageView bookImageView = (ImageView)view.findViewById(R.id.topImage);
@@ -198,7 +199,7 @@ public class RecipeActivity extends AppCompatActivity
 
         RecipeDescFragment recipeDescFragment =
                 RecipeDescFragment.newInstance(mTitles[bookIndex], mDescriptions[bookIndex],
-                        mImageLargeResourceIds[bookIndex], bookIndex);
+                        mImageLargeResourceIds[bookIndex], bookIndex, recipeModel);
         recipeDescFragment.setEnterTransition(slideBottomTransition);
         recipeDescFragment.setAllowEnterTransitionOverlap(false);
         recipeDescFragment.setSharedElementEnterTransition(transitionSet);

@@ -91,7 +91,6 @@ public class RecipeListFragment extends Fragment {
         // Create a list of RecipeModel, which will be used to store
         // the contents of RecipeModel objects retrived from the database
          recipeList = new ArrayList<RecipeModel>();
-
         /**
          * Get the database
          * This method will be evoked any time the data on the database changes.
@@ -156,7 +155,9 @@ public class RecipeListFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
                         //Toast.makeText(getActivity(), mTitles[position], Toast.LENGTH_SHORT).show();
-                        mListener.onSelectedBookChanged(view, position);
+
+                        // Give back the position of the item selected
+                        mListener.onSelectedBookChanged(view, position,recipeList.get(position));
                     }
                 }));
 
