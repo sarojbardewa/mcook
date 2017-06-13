@@ -36,7 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageView mImageView;
     private User mProfileInfo;
     private TextView mName, mLocation, mFavRec, mDietary;
-    private String name, location;
+    private String name, location, favrec,dietary;
     private ProfileHelperActivity mHelper;
 
     @Override
