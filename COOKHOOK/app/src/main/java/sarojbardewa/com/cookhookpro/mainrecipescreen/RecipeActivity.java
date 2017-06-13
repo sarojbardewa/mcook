@@ -2,7 +2,6 @@ package sarojbardewa.com.cookhookpro.mainrecipescreen;
 
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -177,13 +175,14 @@ public class RecipeActivity extends AppCompatActivity
     }
 
     //************************
-    // TODO : When the book is selected, display the book
+    // TODO : When the recipe is selected, display the book
     @Override
     public void onSelectedBookChanged(View view, int bookIndex, RecipeModel recipeModel) {
 
         TextView titleTextView = (TextView)view.findViewById(R.id.recipeTitle);
         ImageView bookImageView = (ImageView)view.findViewById(R.id.topImage);
 
+        // Animate the book movements
         Slide slideBottomTransition = new Slide(Gravity.BOTTOM);
         slideBottomTransition.setDuration(500);
 
@@ -196,9 +195,10 @@ public class RecipeActivity extends AppCompatActivity
         transitionSet.addTransition(changeTransformTransition);
         transitionSet.setDuration(500);
 
+        // Get handle to the recipe description fragment
+
         RecipeDescFragment recipeDescFragment =
-                RecipeDescFragment.newInstance(mTitles[bookIndex], mDescriptions[bookIndex],
-                        mImageLargeResourceIds[bookIndex], bookIndex, recipeModel);
+                RecipeDescFragment.newInstance(recipeModel); // Get the reference to the fragment
         recipeDescFragment.setEnterTransition(slideBottomTransition);
         recipeDescFragment.setAllowEnterTransitionOverlap(false);
         recipeDescFragment.setSharedElementEnterTransition(transitionSet);
@@ -214,15 +214,6 @@ public class RecipeActivity extends AppCompatActivity
 
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig)
-    {
-        super.onConfigurationChanged(newConfig);
-        //Rotation kills the dialog. Make a fix if time permitted.
-        Toast.makeText(RecipeActivity.this,"Android internal configuration changed..", Toast.LENGTH_SHORT).show();
-    }
-
-    //*********
 
 
 }

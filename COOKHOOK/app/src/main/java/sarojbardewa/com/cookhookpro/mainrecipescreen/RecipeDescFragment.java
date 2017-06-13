@@ -4,7 +4,6 @@ package sarojbardewa.com.cookhookpro.mainrecipescreen;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +14,10 @@ import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.StxStDirActivity.StxStDirActivity;
-import sarojbardewa.com.cookhookpro.newrecipe.NewRecipeActivity;
 import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
 
 
@@ -32,28 +29,23 @@ public class RecipeDescFragment extends Fragment{
 
     List<RecipeModel> recipeList;  // List of recipe models
 
-    private static final String ARG_TITLE = "title";
-    private static final String ARG_DESCRIPTION = "description";
+    private static final String RKEY = "RECIPE_KEY";
     private static final String ARG_IMAGE_ID = "image id";
     private static final String ARG_POSITION = "position";
-    RecipeModel rm1;
+    private RecipeModel rm1;  // Get a private reference to a RecipeModel
 
 
-    public static RecipeDescFragment newInstance(String title, String description,
-                                                 int imageResourceId, int position, RecipeModel recipeModel) {
-        RecipeDescFragment fragment = new RecipeDescFragment(recipeModel);
-        Bundle args = new Bundle();
-        args.putString(ARG_TITLE, title);
-        args.putString(ARG_DESCRIPTION, description);
-        args.putInt(ARG_IMAGE_ID, imageResourceId);
-        args.putInt(ARG_POSITION, position);
-        fragment.setArguments(args);
+    public static RecipeDescFragment newInstance(RecipeModel recipeModel) {
+        // Instantiate the fragment
+        RecipeDescFragment fragment = new RecipeDescFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(RKEY, recipeModel);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
-    public RecipeDescFragment(RecipeModel recipeModel) {
+    public RecipeDescFragment() {
         // Required empty public constructor
-        rm1 = recipeModel;
 
     }
 
@@ -63,56 +55,11 @@ public class RecipeDescFragment extends Fragment{
          container.removeAllViews();  // Remove all paste fragments if any
          View rootView = inflater.inflate(R.layout.fragment_recipe_desc, container, false);
 
-         // Get reference to the database
-//         database = FirebaseDatabase.getInstance();
-//         mDatabaseReference = database.getReference();
-
-         // This holds the array list of recipe titles
-         //TODO:
-         // mTitles = getResources().getStringArray(R.array.book_titles);
-
-         // Create a list of RecipeModel, which will be used to store
-         // the contents of RecipeModel objects retrived from the database
-         recipeList = new ArrayList<RecipeModel>();
+         rm1 = (RecipeModel) getArguments().getSerializable(RKEY);
 
          /**
-          * Get the database
-          * This method will be evoked any time the data on the database changes.
+          * Get all the handle to the widgets
           */
-
-//         mDatabaseReference.child("recipes").addValueEventListener(new ValueEventListener() {
-//             //dataShot is the data at the point in time.
-//             @Override
-//             public void onDataChange(DataSnapshot dataSnapshot) {
-//                 // Get reference to each of the recipe -unit as a collection
-//                 // Get all the children at this level (alt+enter+v for auto fill)
-//                 Iterable<DataSnapshot> allRecipes = dataSnapshot.getChildren();
-//
-//                 int i = 1;
-//                 // Shake hands with each of the iterable
-//                 for (DataSnapshot oneRecipe : allRecipes) {
-//                     // Pull out the recipe as a java object
-//                     RecipeModel oneRecipeContent = oneRecipe.getValue(RecipeModel.class);
-//                     // Save the recipes to the recipelist
-//                     recipeList.add(oneRecipeContent);
-//                     Log.d("RETRIEVE receipe", "i="+ i + oneRecipeContent.description);
-//                     ++i;
-//                 }
-//             }
-//
-//             @Override
-//             public void onCancelled(DatabaseError databaseError) {
-//
-//                 Log.d ("RETRIEVE", " Could not retrieved the database");
-//
-//             }
-//         });
-
-         Log.d ("RETRIEVE", "onCreateView of recipe description()");
-
-
-//         RecipeModel rm1 = recipeList.get(0);
-
          TextView recipeTitleView = (TextView)rootView.findViewById(R.id.recipeTitle);
          TextView recipeDescriptionView = (TextView)rootView.findViewById(R.id.recipeDescription);
          ImageView topImageView = (ImageView)rootView.findViewById(R.id.topImage);
