@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 /**
  * Created by Kyle on 6/10/2017.
@@ -18,7 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class UserProfile {
     private static final UserProfile ourInstance = new UserProfile();
     private boolean mIsLoggedIn;
-    private String mUsername, mPassword;
+    private String mUsername, mPassword, mEmail;
     private FirebaseUser mFirebaseUser;
 
     //Firebase related authentication
@@ -33,20 +34,21 @@ public class UserProfile {
         return ourInstance;
     }
 
-    public void Login(final String username, final String password, final OnCompleteListener<AuthResult> listener) throws Exception
+    public void Login(final String email, final String password, final OnCompleteListener<AuthResult> listener) throws Exception
     {
         if(mIsLoggedIn) {
             throw new Exception("Already logged in");
         }
 
         //TODO: Code to login to firebase
-        mAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
                     mIsLoggedIn = true;
-                    mUsername = username;
+                    mEmail = email;
+                    mUsername = mAuth.getCurrentUser().getDisplayName();
                     mPassword = password;
                 }
                 listener.onComplete(task);
@@ -56,13 +58,43 @@ public class UserProfile {
 
     }
 
-    public void CreateAccount(final String username, final String password, final OnCompleteListener<AuthResult> listener) throws Exception
+    public void CreateAccount(final String username, final String email, final String password, final OnCompleteListener<AuthResult> listener) throws Exception
     {
         if(mIsLoggedIn) {
             throw new Exception("Already logged in");
         }
 
-        mAuth.createUserWithEmailAndPassword(username, password).addOnCompleteListener(listener);
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                final Task<AuthResult> createAccountTask = task;
+                if(task.isSuccessful())
+                {
+                    mAuth.getCurrentUser().updateProfile(new UserProfileChangeRequest.Builder().setDisplayName(username).build())
+                            .addOnCompleteListener(new OnCompleteListener<Void>()
+                    {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            listener.onComplete(createAccountTask);
+                        }
+                    });
+                }
+                else
+                {
+                    listener.onComplete(createAccountTask);
+                }
+            }
+        });
+    }
+
+    public String GetUserName()
+    {
+        return mAuth.getCurrentUser().getDisplayName();
+    }
+
+    public String GetUid()
+    {
+        return mAuth.getCurrentUser().getUid();
     }
 
     public void Logout()

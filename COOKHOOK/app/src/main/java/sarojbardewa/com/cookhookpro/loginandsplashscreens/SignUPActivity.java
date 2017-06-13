@@ -18,7 +18,7 @@ import sarojbardewa.com.cookhookpro.mainrecipescreen.RecipeActivity;
 
 public class SignUPActivity extends AppCompatActivity implements OnCompleteListener<AuthResult>
 {
-    EditText editTextUserName,editTextPassword,editTextConfirmPassword;
+    EditText editTextUserName, editTextEmail, editTextPassword, editTextConfirmPassword;
     Button btnCreateAccount;
     private ProgressDialog dialog;
 
@@ -29,6 +29,7 @@ public class SignUPActivity extends AppCompatActivity implements OnCompleteListe
         setContentView(R.layout.sign_up);
 
         editTextUserName = (EditText) findViewById(R.id.sign_up_username);
+        editTextEmail = (EditText) findViewById(R.id.sign_up_email);
         editTextPassword = (EditText) findViewById(R.id.sign_up_password);
         editTextConfirmPassword = (EditText) findViewById(R.id.sign_up_confirm_password);
 
@@ -36,12 +37,13 @@ public class SignUPActivity extends AppCompatActivity implements OnCompleteListe
 
         btnCreateAccount.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String userName=editTextUserName.getText().toString();
-                String password=editTextPassword.getText().toString();
-                String confirmPassword=editTextConfirmPassword.getText().toString();
+                String userName = editTextUserName.getText().toString();
+                String email = editTextEmail.getText().toString();
+                String password = editTextPassword.getText().toString();
+                String confirmPassword = editTextConfirmPassword.getText().toString();
 
                 // check if any of the fields are vacant
-                if(userName.equals("")||password.equals("")||confirmPassword.equals(""))
+                if(userName.equals("") || email.equals("") || password.equals("") || confirmPassword.equals(""))
                 {
                     Toast.makeText(getApplicationContext(), "Field Vacant", Toast.LENGTH_LONG).show();
                     return;
@@ -56,7 +58,7 @@ public class SignUPActivity extends AppCompatActivity implements OnCompleteListe
                 {
                     UserProfile user = UserProfile.getInstance();
                     try {
-                        user.CreateAccount(userName, password, SignUPActivity.this);
+                        user.CreateAccount(userName, email, password, SignUPActivity.this);
                         dialog = new ProgressDialog(SignUPActivity.this);
                         dialog.setTitle("Creating account...");
                         dialog.show();
@@ -75,10 +77,10 @@ public class SignUPActivity extends AppCompatActivity implements OnCompleteListe
         dialog.dismiss();
         if(task.isSuccessful())
         {
-            String userName=editTextUserName.getText().toString();
+            String email = editTextEmail.getText().toString();
             String password=editTextPassword.getText().toString();
             Intent temp = new Intent(getApplicationContext(), LoginActivity.class);
-            temp.putExtra(LoginActivity.EXTRA_USER_NAME, userName);
+            temp.putExtra(LoginActivity.EXTRA_EMAIL, email);
             temp.putExtra(LoginActivity.EXTRA_PASSWORD, password);
             startActivity(temp);
             finish();
