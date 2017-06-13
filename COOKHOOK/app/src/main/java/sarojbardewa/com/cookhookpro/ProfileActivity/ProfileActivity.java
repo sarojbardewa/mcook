@@ -4,6 +4,7 @@ package sarojbardewa.com.cookhookpro.ProfileActivity;
  * Created by b on 6/12/17.
  */
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String mURL;
     private TextView mName, mLocation, mFavRec, mDietary;
     private String name, location, favrec, dietary;
+    private Context mContext = ProfileActivity.this;
 
 
     @Override
@@ -66,6 +69,9 @@ public class ProfileActivity extends AppCompatActivity {
                     mLocation.setText(profileupload.getLocation());
                     mFavRec.setText(profileupload.getFavrec());
                     mDietary.setText(profileupload.getDietary());
+                    mURL = profileupload.getUrl();
+
+                    Glide.with(mContext).load(mURL).into(mImageView);
                 }
             }
             @Override

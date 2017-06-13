@@ -7,9 +7,9 @@
             android:icon="@drawable/ic_face_black_24dp"
             android:title="My Profile"/>
         <item
-            android:id="@+id/direction"
-            android:icon="@drawable/ic_face_black_24dp"
-            android:title="Directions"/>
+            android:id="@+id/following"
+            android:icon="@drawable/ic_group_black_24dp"
+            android:title="Following"/>
         <item
             android:id="@+id/favorites"
             android:icon="@drawable/ic_favorite_black_24dp"

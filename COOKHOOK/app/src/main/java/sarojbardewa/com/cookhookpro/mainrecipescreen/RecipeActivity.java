@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,7 +32,6 @@ import com.google.firebase.storage.StorageReference;
 
 import sarojbardewa.com.cookhookpro.ProfileActivity.ProfileActivity;
 import sarojbardewa.com.cookhookpro.R;
-import sarojbardewa.com.cookhookpro.StxStDirActivity.StxStDirActivity;
 import sarojbardewa.com.cookhookpro.loginandsplashscreens.UserProfile;
 import sarojbardewa.com.cookhookpro.newrecipe.NewRecipeActivity;
 import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
@@ -85,6 +85,8 @@ public class RecipeActivity extends AppCompatActivity
         fm.beginTransaction()
                 .add(R.id.dashboard_content, listFragment)
                 .commit();
+
+        // Update the user logged in info
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userName = user.getDisplayName();
         String email = user.getEmail();
@@ -92,6 +94,7 @@ public class RecipeActivity extends AppCompatActivity
         ((TextView) nav_header.findViewById(R.id.header_user)).setText(userName);
         ((TextView) nav_header.findViewById(R.id.header_email)).setText(email);
         navigationView.addHeaderView(nav_header);
+
 
     }
 
@@ -135,12 +138,11 @@ public class RecipeActivity extends AppCompatActivity
         if (id == R.id.my_profile) {
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
-        } else if (id == R.id.direction) {
-            Intent intent = new Intent(this, StxStDirActivity.class);
-            startActivity(intent);
-        }else if (id == R.id.favorites) {
+        } else if (id == R.id.following) {
+            Toast.makeText(this, "Feature coming soon!", Toast.LENGTH_SHORT).show();
 
-        } else if (id == R.id.favorites) {
+        }else if (id == R.id.favorites) {
+            Toast.makeText(this, "Feature coming soon!",Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.shopping_list) {
             Intent intent = new Intent(this, ShoppingListActivity.class);
@@ -153,8 +155,10 @@ public class RecipeActivity extends AppCompatActivity
         } else if (id == R.id.sign_out) {
             UserProfile.getInstance().LogoutAndGoToLoginScreen(this);
         } else if (id == R.id.nav_share) {
+            Toast.makeText(this, "Feature coming soon!",Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_send) {
+            Toast.makeText(this, "Feature coming soon!",Toast.LENGTH_SHORT).show();
 
         }
 
