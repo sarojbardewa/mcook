@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
@@ -22,6 +23,7 @@ import java.util.List;
 import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.StxStDirActivity.StxStDirActivity;
 import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
+import sarojbardewa.com.cookhookpro.shoppinglist.ShoppingList;
 
 
 public class RecipeDescFragment extends Fragment{
@@ -81,6 +83,14 @@ public class RecipeDescFragment extends Fragment{
                  StxStDirActivity.setRecipe(rm1);
                  Intent intent = new Intent(getActivity(), StxStDirActivity.class);
                  startActivity(intent);
+             }
+         });
+
+         addToShoppingList.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 ShoppingList.getInstance().AddRecipe(rm1);
+                 Toast.makeText(getActivity().getApplicationContext(), "Added " + rm1.getName() + " to shopping list.", Toast.LENGTH_SHORT).show();
              }
          });
 

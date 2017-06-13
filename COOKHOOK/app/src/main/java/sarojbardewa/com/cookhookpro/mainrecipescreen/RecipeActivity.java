@@ -33,6 +33,7 @@ import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.loginandsplashscreens.UserProfile;
 import sarojbardewa.com.cookhookpro.newrecipe.NewRecipeActivity;
 import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
+import sarojbardewa.com.cookhookpro.shoppinglist.ShoppingListActivity;
 
 public class RecipeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnSelectedBookChangeListener {
@@ -134,7 +135,8 @@ public class RecipeActivity extends AppCompatActivity
         } else if (id == R.id.favorites) {
 
         } else if (id == R.id.shopping_list) {
-
+            Intent intent = new Intent(this, ShoppingListActivity.class);
+            startActivity(intent);
         } else if (id == R.id.new_recipe) {
             Log.i(TAG, " new_recipe activity launched");
             Intent intent = new Intent(this, NewRecipeActivity.class);

@@ -60,5 +60,36 @@ public class RecipeModel implements Serializable{
     public List<String> getDirections() {
         return directions;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(o instanceof RecipeModel)
+        {
+            RecipeModel other = (RecipeModel) o;
+            if(!other.name.equals(name) ||
+                    !other.imageUrl.equals(imageUrl) ||
+                    !other.cooktime.equals(cooktime) ||
+                    !other.description.equals(description) ||
+                    !other.userID.equals(userID) ||
+                    (other.ingredients.size() != ingredients.size()) ||
+                    (other.directions.size() != directions.size()))
+            {
+                return false;
+            }
+            for(int i = 0; i < directions.size(); ++i)
+            {
+                if(other.directions.get(i) != directions.get(i))
+                    return false;
+            }
+            for(int i = 0; i < ingredients.size(); ++i)
+            {
+                if(other.ingredients.get(i) != ingredients.get(i))
+                    return false;
+            }
+            return true;
+        }
+        return false;
+    }
 }
 

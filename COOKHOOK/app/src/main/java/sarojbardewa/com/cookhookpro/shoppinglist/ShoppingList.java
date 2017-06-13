@@ -19,6 +19,7 @@ public class ShoppingList {
     }
 
     private ShoppingList() {
+        mRecipesInList = new ArrayList<>();
     }
 
     public void AddRecipe(RecipeModel recipe)

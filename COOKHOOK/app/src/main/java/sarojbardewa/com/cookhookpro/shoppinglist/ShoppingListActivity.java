@@ -3,6 +3,7 @@ package sarojbardewa.com.cookhookpro.shoppinglist;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -10,59 +11,98 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.loginandsplashscreens.CheckBoxArrayAdapter;
+import sarojbardewa.com.cookhookpro.loginandsplashscreens.CheckBoxDataContainer;
 import sarojbardewa.com.cookhookpro.loginandsplashscreens.Recipe;
 import sarojbardewa.com.cookhookpro.loginandsplashscreens.UserProfile;
+import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
 
-public class ShoppingListActivity extends AppCompatActivity implements View.OnClickListener{
+public class ShoppingListActivity extends AppCompatActivity {
     private ListView mRecipeListView, mIngredientListView;
-    private HashMap<String, Recipe> mRecipesInCart, mRecipes;
+    private HashMap<String, RecipeModel> mRecipesInCart, mRecipes;
+    private HashMap<String, Boolean> mIngredientsChecked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
+        mRecipesInCart = new HashMap<>();
+        mIngredientsChecked = new HashMap<>();
 
-        Button b = (Button) findViewById(R.id.logout_button);
-        b.setOnClickListener(this);
-
-        mRecipeListView = (ListView) findViewById(R.id.ingredient_list_view);
+        mRecipeListView = (ListView) findViewById(R.id.recipe_list_view);
         mIngredientListView = (ListView) findViewById(R.id.ingredient_list_view);
 
-        mRecipes = GetRecipes();
-        ArrayList<String> recipeNames = new ArrayList<>(mRecipes.keySet());
+        GetRecipeList();
+    }
 
-        ArrayAdapter<CheckBox> recipeBoxes = new CheckBoxArrayAdapter(getApplicationContext(), recipeNames);
+    private void UpdateIngredientList()
+    {
+        ArrayList<CheckBoxDataContainer> ingredients = new ArrayList<>();
+        for(RecipeModel recipe : mRecipesInCart.values())
+        {
+            for(String ingredient : recipe.getIngredients())
+            {
+                boolean isChecked = mIngredientsChecked.containsKey(ingredient) && mIngredientsChecked.get(ingredient);
+                ingredients.add(new CheckBoxDataContainer(ingredient, isChecked));
+            }
+        }
+        ArrayAdapter<CheckBox> ingredientBoxes = new CheckBoxArrayAdapter(getApplicationContext(), ingredients, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckBox box = (CheckBox) v;
+                String ingredient = box.getText().toString();
+                mIngredientsChecked.put(ingredient, box.isChecked());
+            }
+        });
+        mIngredientListView.setAdapter(ingredientBoxes);
+    }
+
+    private void GetRecipeList()
+    {
+        mRecipes = GetRecipes();
+        ArrayList<CheckBoxDataContainer> recipeNames = new ArrayList<>();
+        for(String recipeName : mRecipes.keySet())
+        {
+            recipeNames.add(new CheckBoxDataContainer(recipeName, false));
+        }
+        ArrayAdapter<CheckBox> recipeBoxes = new CheckBoxArrayAdapter(getApplicationContext(), recipeNames, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckBox box = (CheckBox) v;
+                String recipeName = box.getText().toString();
+                if (box.isChecked()) {
+                    if (!mRecipesInCart.containsKey(recipeName)) {
+                        mRecipesInCart.put(recipeName, mRecipes.get(recipeName));
+                    }
+                } else {
+                    if (mRecipesInCart.containsKey(recipeName)) {
+                        mRecipesInCart.remove(recipeName);
+                    }
+                    for(String ingredient : mRecipes.get(recipeName).getIngredients())
+                    {
+                        if(mIngredientsChecked.containsKey(ingredient))
+                        {
+                            mIngredientsChecked.remove(ingredient);
+                        }
+                    }
+                }
+                UpdateIngredientList();
+            }
+        });
         mRecipeListView.setAdapter(recipeBoxes);
     }
 
-    @Override
-    public void onClick(View v) {
-        if(v.getId() == R.id.logout_button) {
-            UserProfile.getInstance().LogoutAndGoToLoginScreen(this);
-        }
-    }
-
-    private HashMap<String, Recipe> GetRecipes()
+    private HashMap<String, RecipeModel> GetRecipes()
     {
-        HashMap<String, Recipe> recipes = new HashMap<>();
-        String recipeName = "Chicken and rice";
-        ArrayList<String> ingredients = new ArrayList<>();
-        ingredients.add("Chicken");
-        ingredients.add("Rice");
-        ingredients.add("Broccoli");
-        ingredients.add("Cheese");
-
-        recipes.put(recipeName, new Recipe(recipeName, ingredients));
-
-        recipeName = "Spaghetti and meatballs";
-        ArrayList<String> smIngredients = new ArrayList<>();
-        smIngredients.add("Spaghetti");
-        smIngredients.add("Meatballs");
-        smIngredients.add("Marinara sauce");
-        recipes.put(recipeName, new Recipe(recipeName, smIngredients));
+        HashMap<String, RecipeModel> recipes = new HashMap<>();
+        List<RecipeModel> recipesFromShoppingList = ShoppingList.getInstance().GetRecipesInShoppingList();
+        for(RecipeModel recipe : recipesFromShoppingList)
+        {
+            recipes.put(recipe.getName(), recipe);
+        }
         return recipes;
     }
 

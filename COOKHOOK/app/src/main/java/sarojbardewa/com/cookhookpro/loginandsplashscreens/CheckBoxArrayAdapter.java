@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import sarojbardewa.com.cookhookpro.R;
 
@@ -16,13 +18,16 @@ import sarojbardewa.com.cookhookpro.R;
  */
 
 public class CheckBoxArrayAdapter extends ArrayAdapter<CheckBox> {
-    private ArrayList<String> mItems;
+
+    private ArrayList<CheckBoxDataContainer> mItems;
     private Context mContext;
-    public CheckBoxArrayAdapter(Context context, ArrayList<String> items)
+    private View.OnClickListener mClickListener;
+    public CheckBoxArrayAdapter(Context context, ArrayList<CheckBoxDataContainer> items, View.OnClickListener listener)
     {
         super(context, R.layout.checkbox_in_listview);
         mItems = items;
         mContext = context;
+        mClickListener = listener;
     }
 
     @Override
@@ -35,7 +40,9 @@ public class CheckBoxArrayAdapter extends ArrayAdapter<CheckBox> {
             v = inflater.inflate(R.layout.checkbox_in_listview, null);
         }
         CheckBox box = ((CheckBox) v.findViewById(R.id.listview_checkbox));
-        box.setText(mItems.get(position));
+        box.setText(mItems.get(position).text);
+        box.setChecked(mItems.get(position).isChecked);
+        box.setOnClickListener(mClickListener);
         return v;
     }
 
