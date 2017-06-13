@@ -2,6 +2,7 @@ package sarojbardewa.com.cookhookpro.mainrecipescreen;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sarojbardewa.com.cookhookpro.R;
+import sarojbardewa.com.cookhookpro.newrecipe.NewRecipeActivity;
 import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
 
 
@@ -113,9 +115,10 @@ public class RecipeDescFragment extends Fragment {
          TextView recipeDescriptionView = (TextView)rootView.findViewById(R.id.recipeDescription);
          ImageView topImageView = (ImageView)rootView.findViewById(R.id.topImage);
          Button recipeBy = (Button) rootView.findViewById(R.id.recipe_by_button);
-         TextView recipeIngredients = (TextView)rootView.findViewById(R.id.recipeDescription);
+         TextView recipeIngredients = (TextView)rootView.findViewById(R.id.ingredients_textview);
          TextView timeDesp = (TextView) rootView.findViewById(R.id.time_desp_textview);
          Button startCooking = (Button) rootView.findViewById(R.id.start_cooking_button);
+         TextView recipeDirections = (TextView) rootView.findViewById(R.id.directions_textview);
          Button addToShoppingList = (Button) rootView.findViewById(R.id.add_to_shoppinglist_button);
 
           Bundle args = getArguments();
@@ -132,10 +135,36 @@ public class RecipeDescFragment extends Fragment {
          timeDesp.setText(rm1.cooktime);
          recipeDescriptionView.setText(rm1.description);
 
+         String temp = "";
+         for (String s :rm1.ingredients)
+         {
+             temp += s + "\n";
+         }
 
+        recipeIngredients.setText(temp);
+
+         temp = "";
+         for (String s :rm1.directions)
+         {
+             temp += s + "\n";
+         }
+         recipeDirections.setText(temp);
          //topImageView.setTransitionName("book_image_" + position);
 
+         /**
+          * Add to the shopping list if user presses the shopping list button
+          */
+
+
+         /**
+          * When start cooking is created
+          */
          return rootView;
     }
+//    public void startCooking (View view){
+//        Intent intent = new Intent(RecipeDescFragment.this, NewRecipeActivity.class);
+//        startActivity(intent);
+//    }
+
 
 }

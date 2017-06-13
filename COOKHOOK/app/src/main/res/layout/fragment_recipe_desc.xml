@@ -155,6 +155,7 @@
             android:layout_marginTop="12dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:onClick="startCooking"
             android:text="Start Cooking"/>
 
     </RelativeLayout>

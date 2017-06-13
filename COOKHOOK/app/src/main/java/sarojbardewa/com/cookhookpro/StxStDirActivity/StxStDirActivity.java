@@ -3,12 +3,16 @@ package sarojbardewa.com.cookhookpro.StxStDirActivity;
 /**
  * Created by b on 6/12/17.
  */
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import sarojbardewa.com.cookhookpro.R;
+import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
+
 /**
  * Created by b on 6/3/17.
  */
@@ -16,6 +20,8 @@ import sarojbardewa.com.cookhookpro.R;
 public class StxStDirActivity extends AppCompatActivity {
     private static final String EXTRA_DIRECTIONS_OBJECT =
             "com.placeholder.noname.cookhook.extra_Directions_object";
+
+    private static RecipeModel rmModel;
 
     private TextView mDirectionsTextView;
     private Button mNext;
@@ -30,7 +36,11 @@ public class StxStDirActivity extends AppCompatActivity {
     private String [] mDirections;
 
 
+    public static void setRecipe (RecipeModel rmModel1){
 
+        rmModel = rmModel1;
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
