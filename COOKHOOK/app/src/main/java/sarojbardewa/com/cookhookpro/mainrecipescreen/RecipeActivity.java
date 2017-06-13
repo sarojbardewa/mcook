@@ -2,6 +2,7 @@ package sarojbardewa.com.cookhookpro.mainrecipescreen;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,13 +23,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import sarojbardewa.com.cookhookpro.R;
+import sarojbardewa.com.cookhookpro.loginandsplashscreens.UserProfile;
 import sarojbardewa.com.cookhookpro.newrecipe.NewRecipeActivity;
+import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
 
 public class RecipeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnSelectedBookChangeListener {
 
     //***************
+    private StorageReference mStorageRef;
+    private DatabaseReference mDatabaseRef;
+    public static final String STORAGE_PATH = "image/";
+
     String[] mTitles;
     String[] mDescriptions;
     private final static String TAG = "RecipeActivity";
@@ -44,7 +56,16 @@ public class RecipeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+
         //******************
+        // Create references to the database and image file
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
+
+        //Get the image Url
+
+
+
         mTitles = getResources().getStringArray(R.array.book_titles);
         mDescriptions = getResources().getStringArray(R.array.book_descriptions);
         //*********************
@@ -74,7 +95,7 @@ public class RecipeActivity extends AppCompatActivity
         Slide slideLeftTransition = new Slide(Gravity.LEFT);
         slideLeftTransition.setDuration(500);
 
-        BookListFragment listFragment = BookListFragment.newInstance();
+        RecipeListFragment listFragment = RecipeListFragment.newInstance();
         listFragment.setExitTransition(slideLeftTransition);
 
         FragmentManager fm = getFragmentManager();
@@ -134,11 +155,7 @@ public class RecipeActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.sign_out) {
-
-            // Display success toast messgage
-            Toast.makeText(getApplicationContext(), "User signed out successfully", Toast.LENGTH_SHORT).show();
-
-
+            UserProfile.getInstance().LogoutAndGoToLoginScreen(this);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -153,9 +170,9 @@ public class RecipeActivity extends AppCompatActivity
     //************************
     // TODO : When the book is selected, display the book
     @Override
-    public void onSelectedBookChanged(View view, int bookIndex) {
+    public void onSelectedBookChanged(View view, int bookIndex, RecipeModel recipeModel) {
 
-        TextView titleTextView = (TextView)view.findViewById(R.id.bookTitle);
+        TextView titleTextView = (TextView)view.findViewById(R.id.recipeTitle);
         ImageView bookImageView = (ImageView)view.findViewById(R.id.topImage);
 
         Slide slideBottomTransition = new Slide(Gravity.BOTTOM);
@@ -170,22 +187,30 @@ public class RecipeActivity extends AppCompatActivity
         transitionSet.addTransition(changeTransformTransition);
         transitionSet.setDuration(500);
 
-        BookDescFragment bookDescFragment =
-                BookDescFragment.newInstance(mTitles[bookIndex], mDescriptions[bookIndex],
-                        mImageLargeResourceIds[bookIndex], bookIndex);
-        bookDescFragment.setEnterTransition(slideBottomTransition);
-        bookDescFragment.setAllowEnterTransitionOverlap(false);
-        bookDescFragment.setSharedElementEnterTransition(transitionSet);
+        RecipeDescFragment recipeDescFragment =
+                RecipeDescFragment.newInstance(mTitles[bookIndex], mDescriptions[bookIndex],
+                        mImageLargeResourceIds[bookIndex], bookIndex, recipeModel);
+        recipeDescFragment.setEnterTransition(slideBottomTransition);
+        recipeDescFragment.setAllowEnterTransitionOverlap(false);
+        recipeDescFragment.setSharedElementEnterTransition(transitionSet);
 
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.dashboard_content, bookDescFragment)
+                .replace(R.id.dashboard_content, recipeDescFragment)
                 .addSharedElement(bookImageView, "book_image_" + bookIndex)
                 .addSharedElement(titleTextView, "title_text_" + bookIndex)
                 .addToBackStack(null)
                 .commit();
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        //Rotation kills the dialog. Make a fix if time permitted.
+        Toast.makeText(RecipeActivity.this,"Android internal configuration changed..", Toast.LENGTH_SHORT).show();
     }
 
     //*********

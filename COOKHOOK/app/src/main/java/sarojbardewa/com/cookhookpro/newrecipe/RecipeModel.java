@@ -14,6 +14,7 @@ public class RecipeModel {
     public String cooktime;
     public List <String> ingredients;
     public List<String> directions;
+    public String userID;
 
     public RecipeModel() {
         // Empty Constructor
@@ -24,13 +25,15 @@ public class RecipeModel {
                        String description,
                        String timeTaken,
                        List<String> ingredientList,
-                       List<String> directionList) {
+                       List<String> directionList,
+                       String userID) {
         this.name = name;
         this.imageUrl = url;
         this.description = description;
         this.cooktime = timeTaken;
         this.ingredients = ingredientList;
         this.directions = directionList;
+        this.userID = userID;
     }
 
     public String getName() {

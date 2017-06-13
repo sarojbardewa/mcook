@@ -12,20 +12,20 @@ import sarojbardewa.com.cookhookpro.R;
 /**
  * Created by Jim on 12/29/2015.
  */
-public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
     private String[] mTitles;
     private int[] mImageResourceIds;
 
-    public BookAdapter(String[] titles, int[] imageResourceIds) {
+    public RecipeAdapter(String[] titles, int[] imageResourceIds) {
         mTitles = titles;
         mImageResourceIds = imageResourceIds;
     }
 
     @Override
-    public BookAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+    public RecipeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                       int viewType) {
         View rootView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.book_card_view, parent, false);
+                .inflate(R.layout.recipe_card_view, parent, false);
 
         ViewHolder vh = new ViewHolder(rootView);
         return vh;
@@ -51,7 +51,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         public ImageView mImageView;
         public ViewHolder(View v) {
             super(v);
-            mTextView = (TextView)v.findViewById(R.id.bookTitle);
+            mTextView = (TextView)v.findViewById(R.id.recipeTitle);
             mImageView = (ImageView)v.findViewById(R.id.topImage);
         }
     }
