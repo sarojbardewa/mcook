@@ -1,49 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="sarojbardewa.com.cookhookpro">
-    
+
+    <!-- Add permission for internet -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
-        android:configChanges="keyboardHidden|orientation|screenSize"
         android:allowBackup="true"
+        android:configChanges="keyboardHidden|orientation|screenSize"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="sarojbardewa.com.cookhookpro.mainrecipescreen.RecipeActivity"
+            android:name=".mainrecipescreen.RecipeActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <!--Activities for New Recipe activity -->
+        <!-- Activities for New Recipe activity -->
         <activity
-            android:name="sarojbardewa.com.cookhookpro.newrecipe.NewRecipeActivity"
+            android:name=".newrecipe.NewRecipeActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name="sarojbardewa.com.cookhookpro.newrecipe.IngredientListActivity"
+            android:name=".newrecipe.IngredientListActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name="sarojbardewa.com.cookhookpro.newrecipe.DirectionsListActivity"
+            android:name=".newrecipe.DirectionsListActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <!-- Test Activity -->
 
         <!-- Activities for Login and Splash Screens -->
-        <activity android:name="sarojbardewa.com.cookhookpro.loginandsplashscreens.SplashActivity">
+        <activity android:name=".loginandsplashscreens.SplashActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="sarojbardewa.com.cookhookpro.loginandsplashscreens.LoginActivity"></activity>
-        <activity android:name="sarojbardewa.com.cookhookpro.loginandsplashscreens.SignUPActivity"></activity>
+        <activity android:name=".loginandsplashscreens.LoginActivity"/>
+        <activity android:name=".loginandsplashscreens.SignUPActivity"/>
         <activity
-            android:name="sarojbardewa.com.cookhookpro.shoppinglist.ShoppingListActivity"
-            android:label="@string/title_activity_shopping_list"></activity>
-
-
+            android:name=".shoppinglist.ShoppingListActivity"
+            android:label="@string/title_activity_shopping_list"/>
+        <activity android:name=".mainrecipescreen.TestActivity">
+        </activity>
     </application>
 
 </manifest>

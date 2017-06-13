@@ -38,6 +38,7 @@ public class RecipeActivity extends AppCompatActivity
     //***************
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
+    public static final String STORAGE_PATH = "image/";
 
     String[] mTitles;
     String[] mDescriptions;
@@ -61,7 +62,8 @@ public class RecipeActivity extends AppCompatActivity
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
         //Get the image Url
-        String 
+
+
 
         mTitles = getResources().getStringArray(R.array.book_titles);
         mDescriptions = getResources().getStringArray(R.array.book_descriptions);

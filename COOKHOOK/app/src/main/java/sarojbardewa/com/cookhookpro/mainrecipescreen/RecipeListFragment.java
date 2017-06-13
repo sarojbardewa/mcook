@@ -11,10 +11,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import sarojbardewa.com.cookhookpro.R;
+import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
 
 // This uses recycler view to display the list of books
 public class RecipeListFragment extends Fragment {
+
+    //**********
+    // Get access to the database
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference mDatabaseReference = database.getReference();
+
+    List<RecipeModel> recipeList;
+
+
 
     // TODO: Rename and change types of parameters
     private OnSelectedBookChangeListener mListener;
@@ -23,7 +42,7 @@ public class RecipeListFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private String[] mTitles;
+    private String[] mTitles = new String [4];
     private int[] mImageResourceIds = {
             R.drawable.maryland_fried_chicken_with_creamy_gravy_tc,
             R.drawable.chicken_nuggets_tc,
@@ -57,8 +76,58 @@ public class RecipeListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        // Get reference to the database
+        database = FirebaseDatabase.getInstance();
+        mDatabaseReference = database.getReference();
+
+        // This holds the array list of recipe titles
+        //TODO:
         mTitles = getResources().getStringArray(R.array.book_titles);
-        mAdapter = new RecipeAdapter(mTitles, mImageResourceIds);
+
+        // Create a list of RecipeModel, which will be used to store
+        // the contents of RecipeModel objects retrived from the database
+         recipeList = new ArrayList<RecipeModel>();
+
+        /**
+         * Get the database
+         * This method will be evoked any time the data on the database changes.
+         */
+
+        mDatabaseReference.child("recipes").addValueEventListener(new ValueEventListener() {
+            //dataShot is the data at the point in time.
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get reference to each of the recipe -unit as a collection
+                // Get all the children at this level (alt+enter+v for auto fill)
+                Iterable<DataSnapshot> allRecipes = dataSnapshot.getChildren();
+
+                // Shake hands with each of the iterable
+                int i = 0;
+                for (DataSnapshot oneRecipe : allRecipes) {
+                    // Pull out the recipe as a java object
+                    RecipeModel oneRecipeContent = oneRecipe.getValue(RecipeModel.class);
+                    // Save the recipes to the recipelist
+                    recipeList.add(oneRecipeContent);
+                    mTitles[i] = oneRecipeContent.description;
+                    ++i;
+
+                    Log.d("RETRIEVE mTitles", "i="+i+oneRecipeContent.description);
+                }
+                mAdapter = new RecipeAdapter(mTitles, mImageResourceIds);
+                mRecyclerView.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+               Log.d ("RETRIEVE", " Could not retrieved the database");
+
+            }
+        });
+
+        Log.d ("RETRIEVE", "onCreate_end()");
+
 
     }
 

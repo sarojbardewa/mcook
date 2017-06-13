@@ -214,7 +214,9 @@ public class NewRecipeActivity extends AppCompatActivity {
                 directionList,
                 myUserId);
 
+                // Get the upload key for the child node
                 String uploadID = mDatabaseRef.push().getKey();
+                // Attach  the recipe node
                 mDatabaseRef.child("recipes").child(uploadID).setValue(recipeModel);
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
