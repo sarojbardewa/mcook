@@ -11,6 +11,9 @@ public class ProfileUpload {
     public String dietary;
     public String url;
 
+    public ProfileUpload(){
+
+    }
     public ProfileUpload(String name, String location, String favrec, String dietary, String url) {
         this.name = name;
         this.location = location;

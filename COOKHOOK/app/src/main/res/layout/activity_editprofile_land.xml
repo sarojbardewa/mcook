@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/activity_editprofile"
+                android:id="@+id/activity_main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp" >
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin" >
     <EditText
         android:id="@+id/editName"
         android:layout_width="wrap_content"
@@ -71,20 +71,20 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
-        android:layout_height="150dp"
-        app:srcCompat="@drawable/pic1"
+        android:layout_height="120dp"
+        app:srcCompat="@drawable/profile"
         android:layout_below="@+id/editdietary"
-        android:layout_centerHorizontal="true"/>
+        android:layout_toStartOf="@+id/btnUpdateProfile"/>
 
     <Button
         android:id="@+id/btnChoose"
         android:text="Select Profile Picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="29dp"
-        android:layout_below="@+id/imageView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"/>
+
+        android:layout_marginBottom="19dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/imageView"/>
 
     <Button
         android:id="@+id/btnUpdateProfile"
@@ -92,8 +92,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_above="@+id/btnViewProfile"
-        android:layout_centerHorizontal="true"/>
+        android:layout_marginEnd="58dp"
+        android:layout_alignTop="@+id/btnChoose"
+        android:layout_alignParentEnd="true"/>
 
     <Button
         android:id="@+id/btnViewProfile"
@@ -101,6 +102,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="11dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+
+        android:layout_marginStart="167dp"
+        android:layout_below="@+id/btnUpdateProfile"
+        android:layout_toEndOf="@+id/imageView"/>
 </RelativeLayout>
