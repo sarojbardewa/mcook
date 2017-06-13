@@ -43,22 +43,11 @@ public class RecipeActivity extends AppCompatActivity
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
     public static final String STORAGE_PATH = "image/";
-
-    String[] mTitles;
-    String[] mDescriptions;
-    int currentIndex = 0;
     private final static String TAG = "RecipeActivity";
 
     private RecipeModel desRecipeModel;  // For passing to recipe description fragment
     int recipePosition;
 
-
-    int[] mImageLargeResourceIds = {
-            R.drawable.maryland_fried_chicken_with_creamy_gravy,
-            R.drawable.chicken_nuggets,
-            R.drawable.grilled_chicken_salad_wraps,
-            R.drawable.swiss_potato_breakfast_casserole
-    };
 
     //******************
     @Override
@@ -69,8 +58,7 @@ public class RecipeActivity extends AppCompatActivity
         // Create references to the database and image file
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
-        mTitles = getResources().getStringArray(R.array.book_titles);
-        mDescriptions = getResources().getStringArray(R.array.book_descriptions);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -101,7 +89,6 @@ public class RecipeActivity extends AppCompatActivity
         ((TextView) nav_header.findViewById(R.id.header_user)).setText(userName);
         ((TextView) nav_header.findViewById(R.id.header_email)).setText(email);
         navigationView.addHeaderView(nav_header);
-        currentIndex = 0;
 
     }
 
@@ -172,7 +159,6 @@ public class RecipeActivity extends AppCompatActivity
     public void onSelectedBookChanged(View view, int bookIndex, RecipeModel recipeModel) {
         desRecipeModel = recipeModel;  // Save the current recipe model for display
         recipePosition = bookIndex;
-        currentIndex = 1;
 
         TextView titleTextView = (TextView) view.findViewById(R.id.recipeTitle);
         ImageView bookImageView = (ImageView) view.findViewById(R.id.topImage);
