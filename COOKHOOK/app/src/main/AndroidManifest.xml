@@ -4,7 +4,7 @@
 
     <!-- Add permission for internet -->
     <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:configChanges="keyboardHidden|orientation|screenSize"
@@ -32,6 +32,14 @@
             android:name=".newrecipe.DirectionsListActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".ProfileActivity.ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".ProfileUpdateActivity.UpdateProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <!-- Test Activity -->
 
@@ -47,8 +55,7 @@
         <activity android:name=".loginandsplashscreens.SignUPActivity"/>
         <activity
             android:name=".shoppinglist.ShoppingListActivity"
-            android:label="@string/title_activity_shopping_list"/>
-        <activity android:name=".mainrecipescreen.TestActivity">
+            android:label="@string/title_activity_shopping_list">
         </activity>
     </application>
 

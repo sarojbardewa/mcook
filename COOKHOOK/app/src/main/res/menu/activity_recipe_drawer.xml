@@ -7,6 +7,10 @@
             android:icon="@drawable/ic_face_black_24dp"
             android:title="My Profile"/>
         <item
+            android:id="@+id/direction"
+            android:icon="@drawable/ic_face_black_24dp"
+            android:title="Directions"/>
+        <item
             android:id="@+id/favorites"
             android:icon="@drawable/ic_favorite_black_24dp"
             android:title="Favorites"/>

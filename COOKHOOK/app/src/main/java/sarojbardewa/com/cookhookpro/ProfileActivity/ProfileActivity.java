@@ -13,72 +13,68 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import sarojbardewa.com.cookhookpro.ProfileUpdateActivity.ProfileUpload;
 import sarojbardewa.com.cookhookpro.ProfileUpdateActivity.UpdateProfileActivity;
 import sarojbardewa.com.cookhookpro.R;
-import sarojbardewa.com.cookhookpro.profilehelper.ProfileHelperActivity;
-import sarojbardewa.com.cookhookpro.profilehelper.User;
 
 /**
  * Created by b on 6/11/17.
  */
 
-public class ProfileActivity extends AppCompatActivity  {
+public class ProfileActivity extends AppCompatActivity {
 
     private ImageButton btnEditProfile;
     private Button btnViewRecipes;
     private ImageView mImageView;
-    private User mProfileInfo;
+    private DatabaseReference mReference;
+    private String mURL;
     private TextView mName, mLocation, mFavRec, mDietary;
-    private String name, location, favrec,dietary;
-    private ProfileHelperActivity mHelper;
+    private String name, location, favrec, dietary;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_own);
-
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-
-
-        Query query = reference.child("users").child((String) mHelper.getUserId()).child("profileName");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // dataSnapshot is the "issue" node with all children with id 0
-                    dataSnapshot.getChildren();
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
         mImageView = (ImageView) findViewById(R.id.imgProfilePic);
         mImageView.setImageResource(R.drawable.pic1);
 
         mName = (TextView) findViewById(R.id.name);
-        mName.setText(mProfileInfo.profileName);
+        //mName.setText("tester");
         mLocation = (TextView) findViewById(R.id.location);
         mFavRec = (TextView) findViewById(R.id.favrec);
         mDietary = (TextView) findViewById(R.id.dietary);
-        if (mName!=null) {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String PATH = "user" + "/" + uid;
+        DatabaseReference ref = database.getReference(PATH);
 
-            mLocation.setText(mProfileInfo.profileLocation);
-            mFavRec.setText(mProfileInfo.profileFavRecipe);
-            mDietary.setText(mProfileInfo.profileDietaryRes);
-        }
+// Attach a listener to read the data at our posts reference
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ProfileUpload profileupload = dataSnapshot.getValue(ProfileUpload.class);
+                if (profileupload != null) {
+                    mName.setText(profileupload.getName());
+                    mLocation.setText(profileupload.getLocation());
+                    mFavRec.setText(profileupload.getFavrec());
+                    mDietary.setText(profileupload.getDietary());
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+
         btnEditProfile = (ImageButton) findViewById(R.id.btnEdit);
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override

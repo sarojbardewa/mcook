@@ -31,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import sarojbardewa.com.cookhookpro.ProfileActivity.ProfileActivity;
 import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.StxStDirActivity.StxStDirActivity;
 import sarojbardewa.com.cookhookpro.loginandsplashscreens.UserProfile;
@@ -155,9 +156,12 @@ public class RecipeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.my_profile) {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.direction) {
             Intent intent = new Intent(this, StxStDirActivity.class);
             startActivity(intent);
-        } else if (id == R.id.favorites) {
+        }else if (id == R.id.favorites) {
 
         } else if (id == R.id.shopping_list) {
 

@@ -82,7 +82,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("user");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
         btnChoosePersonal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,8 +120,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
 
                             //String uploadID = mDatabaseRef.push().getKey();
-                            mDatabaseRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(profileupload);
-                            //mDatabaseRef.child(mUid).setValue(profileupload);
+                            mDatabaseRef.child("user").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(profileupload);
+
                         }
                     }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
 
