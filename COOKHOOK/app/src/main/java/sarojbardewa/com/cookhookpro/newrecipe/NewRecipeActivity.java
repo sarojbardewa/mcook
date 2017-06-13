@@ -21,13 +21,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.firebase.auth.FirebaseAuth; // Needed to get current user ID.
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -77,8 +77,8 @@ public class NewRecipeActivity extends AppCompatActivity {
         mDescription = (EditText)findViewById(R.id.description_edittext);
         ingredientList = new ArrayList<>();
 
-        // Get current user ID
-        myUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        // Get current user ID as username
+        myUserId = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         Log.d(TAG,"CurrentUserID :" + myUserId);
         directionList = new ArrayList<>();
         //Get the uri if saved before and display the image
@@ -132,8 +132,6 @@ public class NewRecipeActivity extends AppCompatActivity {
                 mImageView.setImageBitmap(bitmap);
 //                Bitmap bm = MediaStore.Images.Media.getBitmap(getContentResolver(), imgUri);
 //                mImageView.setImageBitmap(bm);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }

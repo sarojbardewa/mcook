@@ -34,6 +34,7 @@ public class RecipeListFragment extends Fragment {
 
     List<RecipeModel> recipeList;
     String[] mTitles;
+    String [] mImageResourceIds;
 
 
 
@@ -45,13 +46,14 @@ public class RecipeListFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
 
     List <String> mTitlesList = new ArrayList<String>();
+    List <String> mImageIDList = new ArrayList<String>();
 
-    private int[] mImageResourceIds = {
-            R.drawable.maryland_fried_chicken_with_creamy_gravy_tc,
-            R.drawable.chicken_nuggets_tc,
-            R.drawable.grilled_chicken_salad_wraps_tc,
-            R.drawable.swiss_potato_breakfast_casserole_tc
-    };
+//    private int[] mImageResourceIds = {
+//            R.drawable.maryland_fried_chicken_with_creamy_gravy_tc,
+//            R.drawable.chicken_nuggets_tc,
+//            R.drawable.grilled_chicken_salad_wraps_tc,
+//            R.drawable.swiss_potato_breakfast_casserole_tc
+//    };
 
     //**** As per the suggestion from SO
     CoordinatorLayout.Behavior behavior;
@@ -110,12 +112,21 @@ public class RecipeListFragment extends Fragment {
                     RecipeModel oneRecipeContent = oneRecipe.getValue(RecipeModel.class);
                     // Save the recipes to the recipelist
                     recipeList.add(oneRecipeContent);
-                    mTitlesList.add(oneRecipeContent.description);
+                    mTitlesList.add(oneRecipeContent.name);
+                    mImageIDList.add(oneRecipeContent.getImageUrl());
 
-                    Log.d("RETRIEVE mTitles", "i="+oneRecipeContent.description);
+//                    Log.d("RETRIEVE mTitles", "i="+oneRecipeContent.description);
                 }
                 mTitles = mTitlesList.toArray(new String[0]);
-                mAdapter = new RecipeAdapter(mTitles, mImageResourceIds);
+
+                // Convert the mImageResourceIds to the string of arrays of URL's. Note
+                // that the adapter will use string of Image URL's
+                mImageResourceIds = mImageIDList.toArray(new String [0]);
+
+                /**
+                 * Pass the
+                 */
+                mAdapter = new RecipeAdapter(mTitles, mImageResourceIds, getActivity());
                 mRecyclerView.setAdapter(mAdapter);
             }
 
@@ -136,6 +147,7 @@ public class RecipeListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        container.removeAllViews();  // Remove all paste fragments if any
         View rootView = inflater.inflate(R.layout.fragment_recipe_card, container, false);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.book_recycler_view);

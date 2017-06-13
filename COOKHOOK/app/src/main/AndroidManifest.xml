@@ -52,11 +52,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".loginandsplashscreens.LoginActivity"/>
+
         <activity android:name=".loginandsplashscreens.SignUPActivity"/>
         <activity
             android:name=".shoppinglist.ShoppingListActivity"
+<<<<<<< HEAD
             android:label="@string/title_activity_shopping_list">
         </activity>
+=======
+            android:label="@string/title_activity_shopping_list"/>
+
+        <activity android:name=".StxStDirActivity.StxStDirActivity"/>
+>>>>>>> 20a45efd67e923d58d4cf89a34d1cd22b5f69e76
     </application>
 
 </manifest>

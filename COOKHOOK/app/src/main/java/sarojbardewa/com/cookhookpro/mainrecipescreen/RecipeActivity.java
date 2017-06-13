@@ -2,7 +2,6 @@ package sarojbardewa.com.cookhookpro.mainrecipescreen;
 
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,7 +31,6 @@ import com.google.firebase.storage.StorageReference;
 
 import sarojbardewa.com.cookhookpro.ProfileActivity.ProfileActivity;
 import sarojbardewa.com.cookhookpro.R;
-import sarojbardewa.com.cookhookpro.StxStDirActivity.StxStDirActivity;
 import sarojbardewa.com.cookhookpro.loginandsplashscreens.UserProfile;
 import sarojbardewa.com.cookhookpro.newrecipe.NewRecipeActivity;
 import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
@@ -41,50 +38,31 @@ import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
 public class RecipeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnSelectedBookChangeListener {
 
-    //***************
+    private final static String MKEY = "ORIENTATION";
+    private final static String MINDEX = "RECIPE_INDEX";
+    private final static String MVIEW = "CURRENT_VIEW";
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
     public static final String STORAGE_PATH = "image/";
-
-    String[] mTitles;
-    String[] mDescriptions;
     private final static String TAG = "RecipeActivity";
 
-    int[] mImageLargeResourceIds = {
-            R.drawable.maryland_fried_chicken_with_creamy_gravy,
-            R.drawable.chicken_nuggets,
-            R.drawable.grilled_chicken_salad_wraps,
-            R.drawable.swiss_potato_breakfast_casserole
-    };
+    private RecipeModel desRecipeModel;  // For passing to recipe description fragment
+    int recipePosition;
+
+
     //******************
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
-        //******************
         // Create references to the database and image file
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
-        //Get the image Url
 
-
-
-        mTitles = getResources().getStringArray(R.array.book_titles);
-        mDescriptions = getResources().getStringArray(R.array.book_descriptions);
-        //*********************
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -95,8 +73,6 @@ public class RecipeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-//        //*****
-//        // Create the Fragment and add
         Slide slideLeftTransition = new Slide(Gravity.LEFT);
         slideLeftTransition.setDuration(500);
 
@@ -107,7 +83,6 @@ public class RecipeActivity extends AppCompatActivity
         fm.beginTransaction()
                 .add(R.id.dashboard_content, listFragment)
                 .commit();
-        //***********commit
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userName = user.getDisplayName();
         String email = user.getEmail();
@@ -115,6 +90,7 @@ public class RecipeActivity extends AppCompatActivity
         ((TextView) nav_header.findViewById(R.id.header_user)).setText(userName);
         ((TextView) nav_header.findViewById(R.id.header_email)).setText(email);
         navigationView.addHeaderView(nav_header);
+
     }
 
     @Override
@@ -145,7 +121,6 @@ public class RecipeActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -156,17 +131,22 @@ public class RecipeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.my_profile) {
+<<<<<<< HEAD
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
         } else if (id == R.id.direction) {
             Intent intent = new Intent(this, StxStDirActivity.class);
             startActivity(intent);
         }else if (id == R.id.favorites) {
+=======
+
+        } else if (id == R.id.favorites) {
+>>>>>>> 20a45efd67e923d58d4cf89a34d1cd22b5f69e76
 
         } else if (id == R.id.shopping_list) {
 
         } else if (id == R.id.new_recipe) {
-            Log.i(TAG," new_recipe activity launched");
+            Log.i(TAG, " new_recipe activity launched");
             Intent intent = new Intent(this, NewRecipeActivity.class);
             startActivity(intent);
 
@@ -184,13 +164,16 @@ public class RecipeActivity extends AppCompatActivity
     }
 
     //************************
-    // TODO : When the book is selected, display the book
+    // TODO : When the recipe is selected, display the book
     @Override
     public void onSelectedBookChanged(View view, int bookIndex, RecipeModel recipeModel) {
+        desRecipeModel = recipeModel;  // Save the current recipe model for display
+        recipePosition = bookIndex;
 
-        TextView titleTextView = (TextView)view.findViewById(R.id.recipeTitle);
-        ImageView bookImageView = (ImageView)view.findViewById(R.id.topImage);
+        TextView titleTextView = (TextView) view.findViewById(R.id.recipeTitle);
+        ImageView bookImageView = (ImageView) view.findViewById(R.id.topImage);
 
+        // Animate the book movements
         Slide slideBottomTransition = new Slide(Gravity.BOTTOM);
         slideBottomTransition.setDuration(500);
 
@@ -203,9 +186,10 @@ public class RecipeActivity extends AppCompatActivity
         transitionSet.addTransition(changeTransformTransition);
         transitionSet.setDuration(500);
 
+        // Get handle to the recipe description fragment
+
         RecipeDescFragment recipeDescFragment =
-                RecipeDescFragment.newInstance(mTitles[bookIndex], mDescriptions[bookIndex],
-                        mImageLargeResourceIds[bookIndex], bookIndex, recipeModel);
+                RecipeDescFragment.newInstance(recipeModel); // Get the reference to the fragment
         recipeDescFragment.setEnterTransition(slideBottomTransition);
         recipeDescFragment.setAllowEnterTransitionOverlap(false);
         recipeDescFragment.setSharedElementEnterTransition(transitionSet);
@@ -220,16 +204,4 @@ public class RecipeActivity extends AppCompatActivity
                 .commit();
 
     }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig)
-    {
-        super.onConfigurationChanged(newConfig);
-        //Rotation kills the dialog. Make a fix if time permitted.
-        Toast.makeText(RecipeActivity.this,"Android internal configuration changed..", Toast.LENGTH_SHORT).show();
-    }
-
-    //*********
-
-
 }

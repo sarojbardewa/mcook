@@ -1,12 +1,13 @@
 package sarojbardewa.com.cookhookpro.newrecipe;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Saroj on 6/5/17.
  */
 
-public class RecipeModel {
+public class RecipeModel implements Serializable{
 
     public String name;
     public String imageUrl;

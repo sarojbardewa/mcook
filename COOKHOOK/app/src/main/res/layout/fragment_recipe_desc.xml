@@ -19,8 +19,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:scaleType="fitCenter"
-            android:src="@drawable/maryland_fried_chicken_with_creamy_gravy_tc"
+            android:scaleType="fitStart"
             android:transitionName="book_image"/>
 
         <!--<ImageView-->
@@ -45,22 +44,36 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingRight="1dp"
+                android:elevation="3dp"
+                android:text="Time :"
+                android:textAppearance="@style/TextAppearance.AppCompat"/>
 
             <TextView
                 android:id="@+id/time_desp_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:paddingRight="2dp"
                 android:elevation="3dp"
-                android:hint="Time"
+                android:textAppearance="@style/TextAppearance.AppCompat"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="3dp"
+                android:paddingRight="1dp"
+                android:text=" Recipe By :"
                 android:textAppearance="@style/TextAppearance.AppCompat"/>
 
             <Button
                 android:id="@+id/recipe_by_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Recipe By"/>
+                android:hint="User"/>
 
         </LinearLayout>
 
@@ -155,7 +168,6 @@
             android:layout_marginTop="12dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:onClick="startCooking"
             android:text="Start Cooking"/>
 
     </RelativeLayout>

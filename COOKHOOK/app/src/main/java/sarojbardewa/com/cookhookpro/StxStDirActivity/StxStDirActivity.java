@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
+
 import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
 
@@ -33,7 +35,8 @@ public class StxStDirActivity extends AppCompatActivity {
     private int mRecipeNum = 0;
     private String mFileName;
     private int mNumDirections;
-    private String [] mDirections;
+
+
 
 
     public static void setRecipe (RecipeModel rmModel1){
@@ -46,36 +49,28 @@ public class StxStDirActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_directions);
-        Bundle bundle = getIntent().getExtras();
-        mAddress = bundle.getString("message");
-        mAddresses = mAddress.split(" ");
-        mNumRecipes = mAddresses.length;
-        mFileName = mAddresses[0];
+        final List<String> mDirections = rmModel.getDirections();
+
+
+
+
         //mRecipeBank.recipe(this, mFileName);
 
         //mDirections = mRecipeBank.getDirection();
         mDirNum = 0;
-        mNumDirections = mDirections.length;
+        mNumDirections = mDirections.size();
         mDirectionsTextView = (TextView) findViewById(R.id.directions);
-        mDirectionsTextView.setText(mDirections[mDirNum]);
-        mDirNum = 1;
+        mDirectionsTextView.setText(mDirections.get(mDirNum));
         mNext = (Button) findViewById(R.id.btnNext);
         mNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if(mDirNum < mNumDirections) {
                     //String [] directions = mRecipeBank.getDirection();
                    // mDirectionsTextView.setText(directions[mDirNum]);
-                    mDirNum = mDirNum + 1;
-                }
-                else{
-                    mDirNum = 0;
-                    //String [] directions = mRecipeBank.getDirection();
-                    //mDirectionsTextView.setText(directions[mDirNum]);
-                    mDirNum = mDirNum + 1;
-                }
+                    mDirNum = (mDirNum + 1) % mNumDirections;
 
-            }
+                    mDirectionsTextView.setText(mDirections.get(mDirNum));
+                }
 
         });
     }
