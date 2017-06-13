@@ -2,7 +2,9 @@ package sarojbardewa.com.cookhookpro.mainrecipescreen;
 
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -33,9 +36,10 @@ public class RecipeDescFragment extends Fragment{
     private static final String ARG_IMAGE_ID = "image id";
     private static final String ARG_POSITION = "position";
     private RecipeModel rm1;  // Get a private reference to a RecipeModel
-
+    Context mContext;
 
     public static RecipeDescFragment newInstance(RecipeModel recipeModel) {
+
         // Instantiate the fragment
         RecipeDescFragment fragment = new RecipeDescFragment();
         Bundle bundle = new Bundle();
@@ -52,6 +56,7 @@ public class RecipeDescFragment extends Fragment{
      @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+         mContext = getActivity(); // Get the current activity
          container.removeAllViews();  // Remove all paste fragments if any
          View rootView = inflater.inflate(R.layout.fragment_recipe_desc, container, false);
 
@@ -79,13 +84,12 @@ public class RecipeDescFragment extends Fragment{
              }
          });
 
-          Bundle args = getArguments();
-         int position = args.getInt(ARG_POSITION);
-//
-//         recipeTitleView.setText(args.getString(ARG_TITLE));
-         //recipeTitleView.setTransitionName("title_text_" + position);
-//         recipeDescriptionView.setText(args.getString(ARG_DESCRIPTION));
-          topImageView.setImageResource(args.getInt(ARG_IMAGE_ID));
+         /**
+          * Use glide to show the image
+          */
+         Glide.with(mContext)
+                 .load(rm1.imageUrl)
+                 .into(topImageView);
 
 
          recipeTitleView.setText(rm1.name);
@@ -122,5 +126,25 @@ public class RecipeDescFragment extends Fragment{
 
     }
 
+    /**
+     * Lock the fragment to portrait mode only
+     */
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(getActivity() !=null) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
+    }
+
+    @Override
+    public void onPause() {
+        if (getActivity() != null) {
+            super.onPause();
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+        }
+    }
 
 }

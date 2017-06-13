@@ -40,7 +40,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mTextView.setText(mTitles[position]);
-        holder.mTextView.setTransitionName("title_text_" + position);
+       // holder.mTextView.setTransitionName("title_text_" + position);
         /**
          * Use Glide to display the recipe image.
          */
@@ -48,7 +48,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                 .load(mImageResourceIds[position])
                 .into(holder.mImageView);
 
-        holder.mImageView.setTransitionName("book_image_" + position);
+       // holder.mImageView.setTransitionName("book_image_" + position);
 
     }
 

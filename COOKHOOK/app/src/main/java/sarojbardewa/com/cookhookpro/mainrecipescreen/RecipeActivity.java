@@ -37,14 +37,21 @@ import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
 public class RecipeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnSelectedBookChangeListener {
 
-    //***************
+    private final static String MKEY = "ORIENTATION";
+    private final static String MINDEX = "RECIPE_INDEX";
+    private final static String MVIEW = "CURRENT_VIEW";
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
     public static final String STORAGE_PATH = "image/";
 
     String[] mTitles;
     String[] mDescriptions;
+    int currentIndex = 0;
     private final static String TAG = "RecipeActivity";
+
+    private RecipeModel desRecipeModel;  // For passing to recipe description fragment
+    int recipePosition;
+
 
     int[] mImageLargeResourceIds = {
             R.drawable.maryland_fried_chicken_with_creamy_gravy,
@@ -52,35 +59,21 @@ public class RecipeActivity extends AppCompatActivity
             R.drawable.grilled_chicken_salad_wraps,
             R.drawable.swiss_potato_breakfast_casserole
     };
+
     //******************
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
-        //******************
         // Create references to the database and image file
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
-
-        //Get the image Url
-
-
-
         mTitles = getResources().getStringArray(R.array.book_titles);
         mDescriptions = getResources().getStringArray(R.array.book_descriptions);
-        //*********************
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -91,8 +84,6 @@ public class RecipeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-//        //*****
-//        // Create the Fragment and add
         Slide slideLeftTransition = new Slide(Gravity.LEFT);
         slideLeftTransition.setDuration(500);
 
@@ -103,7 +94,6 @@ public class RecipeActivity extends AppCompatActivity
         fm.beginTransaction()
                 .add(R.id.dashboard_content, listFragment)
                 .commit();
-        //***********commit
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userName = user.getDisplayName();
         String email = user.getEmail();
@@ -111,6 +101,8 @@ public class RecipeActivity extends AppCompatActivity
         ((TextView) nav_header.findViewById(R.id.header_user)).setText(userName);
         ((TextView) nav_header.findViewById(R.id.header_email)).setText(email);
         navigationView.addHeaderView(nav_header);
+        currentIndex = 0;
+
     }
 
     @Override
@@ -157,7 +149,7 @@ public class RecipeActivity extends AppCompatActivity
         } else if (id == R.id.shopping_list) {
 
         } else if (id == R.id.new_recipe) {
-            Log.i(TAG," new_recipe activity launched");
+            Log.i(TAG, " new_recipe activity launched");
             Intent intent = new Intent(this, NewRecipeActivity.class);
             startActivity(intent);
 
@@ -178,9 +170,12 @@ public class RecipeActivity extends AppCompatActivity
     // TODO : When the recipe is selected, display the book
     @Override
     public void onSelectedBookChanged(View view, int bookIndex, RecipeModel recipeModel) {
+        desRecipeModel = recipeModel;  // Save the current recipe model for display
+        recipePosition = bookIndex;
+        currentIndex = 1;
 
-        TextView titleTextView = (TextView)view.findViewById(R.id.recipeTitle);
-        ImageView bookImageView = (ImageView)view.findViewById(R.id.topImage);
+        TextView titleTextView = (TextView) view.findViewById(R.id.recipeTitle);
+        ImageView bookImageView = (ImageView) view.findViewById(R.id.topImage);
 
         // Animate the book movements
         Slide slideBottomTransition = new Slide(Gravity.BOTTOM);
@@ -213,7 +208,4 @@ public class RecipeActivity extends AppCompatActivity
                 .commit();
 
     }
-
-
-
 }
