@@ -23,6 +23,7 @@ import java.util.List;
 import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
 
+
 // This uses recycler view to display the list of books
 public class RecipeListFragment extends Fragment {
 
@@ -32,6 +33,7 @@ public class RecipeListFragment extends Fragment {
     DatabaseReference mDatabaseReference = database.getReference();
 
     List<RecipeModel> recipeList;
+    String[] mTitles;
 
 
 
@@ -42,7 +44,8 @@ public class RecipeListFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private String[] mTitles = new String [4];
+    List <String> mTitlesList = new ArrayList<String>();
+
     private int[] mImageResourceIds = {
             R.drawable.maryland_fried_chicken_with_creamy_gravy_tc,
             R.drawable.chicken_nuggets_tc,
@@ -83,7 +86,7 @@ public class RecipeListFragment extends Fragment {
 
         // This holds the array list of recipe titles
         //TODO:
-        mTitles = getResources().getStringArray(R.array.book_titles);
+       // mTitles = getResources().getStringArray(R.array.book_titles);
 
         // Create a list of RecipeModel, which will be used to store
         // the contents of RecipeModel objects retrived from the database
@@ -103,17 +106,16 @@ public class RecipeListFragment extends Fragment {
                 Iterable<DataSnapshot> allRecipes = dataSnapshot.getChildren();
 
                 // Shake hands with each of the iterable
-                int i = 0;
                 for (DataSnapshot oneRecipe : allRecipes) {
                     // Pull out the recipe as a java object
                     RecipeModel oneRecipeContent = oneRecipe.getValue(RecipeModel.class);
                     // Save the recipes to the recipelist
                     recipeList.add(oneRecipeContent);
-                    mTitles[i] = oneRecipeContent.description;
-                    ++i;
+                    mTitlesList.add(oneRecipeContent.description);
 
-                    Log.d("RETRIEVE mTitles", "i="+i+oneRecipeContent.description);
+                    Log.d("RETRIEVE mTitles", "i="+oneRecipeContent.description);
                 }
+                mTitles = mTitlesList.toArray(new String[0]);
                 mAdapter = new RecipeAdapter(mTitles, mImageResourceIds);
                 mRecyclerView.setAdapter(mAdapter);
             }
