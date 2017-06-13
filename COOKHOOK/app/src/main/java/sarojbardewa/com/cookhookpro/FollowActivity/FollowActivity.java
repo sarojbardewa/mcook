@@ -79,8 +79,8 @@ public class FollowActivity extends AppCompatActivity {
         });
         //String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        String PATH = "user" + "/" + UID;
-        DatabaseReference ref = database.getReference(PATH);
+        String PATH = "user" + "/" ;
+        DatabaseReference ref = database.getReference("user/");
 
 // Attach a listener to read the data at our posts reference
         ref.addValueEventListener(new ValueEventListener() {
