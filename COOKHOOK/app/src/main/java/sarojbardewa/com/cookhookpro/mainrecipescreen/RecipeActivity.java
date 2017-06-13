@@ -16,6 +16,7 @@ import android.transition.Slide;
 import android.transition.TransitionSet;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,12 +24,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import sarojbardewa.com.cookhookpro.R;
+import sarojbardewa.com.cookhookpro.StxStDirActivity.StxStDirActivity;
 import sarojbardewa.com.cookhookpro.loginandsplashscreens.UserProfile;
 import sarojbardewa.com.cookhookpro.newrecipe.NewRecipeActivity;
 import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
@@ -103,6 +107,13 @@ public class RecipeActivity extends AppCompatActivity
                 .add(R.id.dashboard_content, listFragment)
                 .commit();
         //***********commit
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userName = user.getDisplayName();
+        String email = user.getEmail();
+        View nav_header = LayoutInflater.from(this).inflate(R.layout.user_loggedin, null);
+        ((TextView) nav_header.findViewById(R.id.header_user)).setText(userName);
+        ((TextView) nav_header.findViewById(R.id.header_email)).setText(email);
+        navigationView.addHeaderView(nav_header);
     }
 
     @Override
@@ -144,7 +155,8 @@ public class RecipeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.my_profile) {
-            // Handle the camera action
+            Intent intent = new Intent(this, StxStDirActivity.class);
+            startActivity(intent);
         } else if (id == R.id.favorites) {
 
         } else if (id == R.id.shopping_list) {

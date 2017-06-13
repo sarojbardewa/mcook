@@ -29,7 +29,7 @@ import sarojbardewa.com.cookhookpro.profilehelper.User;
  * Created by b on 6/11/17.
  */
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity  {
 
     private ImageButton btnEditProfile;
     private Button btnViewRecipes;
@@ -55,7 +55,6 @@ public class ProfileActivity extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     // dataSnapshot is the "issue" node with all children with id 0
                     dataSnapshot.getChildren();
-
 
                 }
             }

@@ -35,11 +35,11 @@ public class SplashActivity extends AppCompatActivity implements Runnable, OnCom
         profile.Logout();
         try
         {
-            String userName = helper.GetSavedUserName();
+            String email = helper.GetSavedEmail();
             String password = helper.GetSavedPassword();
-            if(userName != null && password != null)
+            if(email != null && password != null)
             {
-                profile.Login(userName, password, this);
+                profile.Login(email, password, this);
             }
             else { throw new Exception("Shouldn't get here, forcing re-login."); }
         }
