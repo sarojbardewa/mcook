@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
+import sarojbardewa.com.cookhookpro.FollowActivity.FollowActivity;
 import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.StxStDirActivity.StxStDirActivity;
 import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
@@ -77,6 +78,13 @@ public class RecipeDescFragment extends Fragment{
          TextView recipeDirections = (TextView) rootView.findViewById(R.id.directions_textview);
          Button addToShoppingList = (Button) rootView.findViewById(R.id.add_to_shoppinglist_button);
 
+         recipeBy.setOnClickListener(new View.OnClickListener() { @Override
+         public void onClick(View view) {
+
+             Intent intent = new Intent(getActivity(), FollowActivity.class);
+             startActivity(intent);
+         }
+         });
          startCooking.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {

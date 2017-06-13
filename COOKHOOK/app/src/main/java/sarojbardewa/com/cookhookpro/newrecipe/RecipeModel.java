@@ -61,6 +61,7 @@ public class RecipeModel implements Serializable{
         return directions;
     }
 
+
     @Override
     public boolean equals(Object o)
     {

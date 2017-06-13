@@ -29,6 +29,14 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
+            android:name=".FollowedActivity.FollowedActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".FollowActivity.FollowActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
             android:name=".newrecipe.DirectionsListActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

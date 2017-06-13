@@ -46,12 +46,7 @@ public class FollowedActivity extends AppCompatActivity {
         mLocation = (TextView) findViewById(R.id.location);
         mFavRec = (TextView) findViewById(R.id.favrec);
         mDietary = (TextView) findViewById(R.id.dietary);
-        if (mName!=null) {
-            mName.setText(mProfileInfo.profileName);
-            mLocation.setText(mProfileInfo.profileLocation);
-            mFavRec.setText(mProfileInfo.profileFavRecipe);
-            mDietary.setText(mProfileInfo.profileDietaryRes);
-        }
+       
         btnEditProfile = (ImageButton) findViewById(R.id.imgFloating);
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
