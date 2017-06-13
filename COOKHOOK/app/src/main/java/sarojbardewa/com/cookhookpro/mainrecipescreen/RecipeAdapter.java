@@ -1,11 +1,14 @@
 package sarojbardewa.com.cookhookpro.mainrecipescreen;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import sarojbardewa.com.cookhookpro.R;
 
@@ -14,11 +17,14 @@ import sarojbardewa.com.cookhookpro.R;
  */
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
     private String[] mTitles;
-    private int[] mImageResourceIds;
+    private String [] mImageResourceIds;
+    Context mContext;
 
-    public RecipeAdapter(String[] titles, int[] imageResourceIds) {
+    public RecipeAdapter(String[] titles, String[] imageResourceIds, Context context) {
         mTitles = titles;
         mImageResourceIds = imageResourceIds;
+        mContext = context;
+
     }
 
     @Override
@@ -35,10 +41,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mTextView.setText(mTitles[position]);
         holder.mTextView.setTransitionName("title_text_" + position);
-        holder.mImageView.setImageResource(mImageResourceIds[position]);
+        /**
+         * Use Glide to display the recipe image.
+         */
+        Glide.with(mContext)
+                .load(mImageResourceIds[position])
+                .into(holder.mImageView);
+
         holder.mImageView.setTransitionName("book_image_" + position);
 
     }
+
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override

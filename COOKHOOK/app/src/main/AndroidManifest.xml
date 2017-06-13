@@ -44,12 +44,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".loginandsplashscreens.LoginActivity"/>
+
         <activity android:name=".loginandsplashscreens.SignUPActivity"/>
         <activity
             android:name=".shoppinglist.ShoppingListActivity"
             android:label="@string/title_activity_shopping_list"/>
-        <activity android:name=".mainrecipescreen.TestActivity">
-        </activity>
+
+        <activity android:name=".StxStDirActivity.StxStDirActivity"/>
     </application>
 
 </manifest>

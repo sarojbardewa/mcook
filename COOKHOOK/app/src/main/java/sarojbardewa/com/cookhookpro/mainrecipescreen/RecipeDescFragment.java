@@ -19,11 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sarojbardewa.com.cookhookpro.R;
+import sarojbardewa.com.cookhookpro.StxStDirActivity.StxStDirActivity;
 import sarojbardewa.com.cookhookpro.newrecipe.NewRecipeActivity;
 import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
 
 
-public class RecipeDescFragment extends Fragment {
+public class RecipeDescFragment extends Fragment{
     //**********
     // Get access to the database
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -59,6 +60,7 @@ public class RecipeDescFragment extends Fragment {
      @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+         container.removeAllViews();  // Remove all paste fragments if any
          View rootView = inflater.inflate(R.layout.fragment_recipe_desc, container, false);
 
          // Get reference to the database
@@ -121,6 +123,15 @@ public class RecipeDescFragment extends Fragment {
          TextView recipeDirections = (TextView) rootView.findViewById(R.id.directions_textview);
          Button addToShoppingList = (Button) rootView.findViewById(R.id.add_to_shoppinglist_button);
 
+         startCooking.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 StxStDirActivity.setRecipe(rm1);
+                 Intent intent = new Intent(getActivity(), StxStDirActivity.class);
+                 startActivity(intent);
+             }
+         });
+
           Bundle args = getArguments();
          int position = args.getInt(ARG_POSITION);
 //
@@ -160,11 +171,9 @@ public class RecipeDescFragment extends Fragment {
           * When start cooking is created
           */
          return rootView;
+
+
     }
-//    public void startCooking (View view){
-//        Intent intent = new Intent(RecipeDescFragment.this, NewRecipeActivity.class);
-//        startActivity(intent);
-//    }
 
 
 }

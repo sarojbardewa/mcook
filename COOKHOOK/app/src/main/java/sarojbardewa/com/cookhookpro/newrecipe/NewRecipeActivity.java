@@ -132,8 +132,6 @@ public class NewRecipeActivity extends AppCompatActivity {
                 mImageView.setImageBitmap(bitmap);
 //                Bitmap bm = MediaStore.Images.Media.getBitmap(getContentResolver(), imgUri);
 //                mImageView.setImageBitmap(bm);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
