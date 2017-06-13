@@ -38,7 +38,6 @@ package sarojbardewa.com.cookhookpro.profilehelper;
  }
  */
 
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -52,7 +51,7 @@ import com.google.firebase.database.ValueEventListener;
  * Created by b on 6/11/17.
  */
 
-public class ProfileHelperActivity extends AppCompatActivity {
+public class ProfileHelperActivity {
 
     private static final String TAG = "ProfileHelperActivity";
     private String userId;
@@ -112,7 +111,7 @@ public class ProfileHelperActivity extends AppCompatActivity {
             mFirebaseDatabaseUser.child(userId).child("email").setValue(email);
 
     }
-    protected void createProfile(String profilename, String profilelocation, String profilefavrec, String profiledietary, String imuri) {
+    public void createProfile(String profilename, String profilelocation, String profilefavrec, String profiledietary, String imuri) {
         // TODO
         // In real apps this userId should be fetched
         // by implementing firebase auth
@@ -131,7 +130,7 @@ public class ProfileHelperActivity extends AppCompatActivity {
 
         addUserChangeListener();
     }
-    protected void updateProfile(String profilename, String profilelocation, String profilefavrec, String profiledietary, String imuri) {
+    public void updateProfile(String profilename, String profilelocation, String profilefavrec, String profiledietary, String imuri) {
         // updating the user via child nodes
         if (!TextUtils.isEmpty(profilename))
             mFirebaseDatabaseUser.child(userId).child("profile name").setValue(profilename);
