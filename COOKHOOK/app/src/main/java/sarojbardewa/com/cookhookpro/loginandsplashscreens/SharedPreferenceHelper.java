@@ -12,7 +12,7 @@ public class SharedPreferenceHelper {
     private static final SharedPreferenceHelper ourInstance = new SharedPreferenceHelper();
     private Activity mActivity;
     private SharedPreferences mSharedPreferences;
-    private static final String UserNameKey = "edu.pdx.mcecs.ece558sp17.group3.loginscreen.username_sp_key";
+    private static final String EmailKey = "edu.pdx.mcecs.ece558sp17.group3.loginscreen.email_sp_key";
     private static final String PasswordKey = "edu.pdx.mcecs.ece558sp17.group3.loginscreen.password_sp_key";
     private static final String AreCredentialsRemembered = "edu.pdx.mcecs.ece558sp17.group3.loginscreen.credentials_remembered";
 
@@ -29,10 +29,10 @@ public class SharedPreferenceHelper {
         return ourInstance;
     }
 
-    public String GetSavedUserName() throws Exception {
+    public String GetSavedEmail() throws Exception {
         if(mSharedPreferences.getBoolean(AreCredentialsRemembered, false))
         {
-            return mSharedPreferences.getString(UserNameKey, null);
+            return mSharedPreferences.getString(EmailKey, null);
         }
         else
         {
@@ -55,7 +55,7 @@ public class SharedPreferenceHelper {
     {
         SharedPreferences.Editor edit = mSharedPreferences.edit();
         edit.putBoolean(AreCredentialsRemembered, true);
-        edit.putString(UserNameKey, userName);
+        edit.putString(EmailKey, userName);
         edit.putString(PasswordKey, password);
         edit.commit();
     }
@@ -64,9 +64,8 @@ public class SharedPreferenceHelper {
     {
         SharedPreferences.Editor edit = mSharedPreferences.edit();
         edit.putBoolean(AreCredentialsRemembered, false);
-        edit.putString(UserNameKey, null);
+        edit.putString(EmailKey, null);
         edit.putString(PasswordKey, null);
         edit.commit();
-
     }
 }

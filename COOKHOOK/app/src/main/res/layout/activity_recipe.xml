@@ -21,7 +21,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/user_loggedin"
         app:menu="@menu/activity_recipe_drawer"/>
     <!-- This is for menu -->
 

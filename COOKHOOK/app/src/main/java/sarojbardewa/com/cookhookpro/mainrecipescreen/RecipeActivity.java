@@ -16,6 +16,7 @@ import android.transition.Slide;
 import android.transition.TransitionSet;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -102,6 +105,13 @@ public class RecipeActivity extends AppCompatActivity
                 .add(R.id.dashboard_content, listFragment)
                 .commit();
         //***********commit
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userName = user.getDisplayName();
+        String email = user.getEmail();
+        View nav_header = LayoutInflater.from(this).inflate(R.layout.user_loggedin, null);
+        ((TextView) nav_header.findViewById(R.id.header_user)).setText(userName);
+        ((TextView) nav_header.findViewById(R.id.header_email)).setText(email);
+        navigationView.addHeaderView(nav_header);
     }
 
     @Override

@@ -26,11 +26,11 @@ import sarojbardewa.com.cookhookpro.mainrecipescreen.RecipeActivity;
  * Provides Functionality to Signup for new account
  */
 public class LoginActivity extends AppCompatActivity implements OnClickListener, OnCompleteListener<AuthResult> {
-    public static final String EXTRA_USER_NAME = "sarojbardewa.com.cookhookpro.loginandsplashscreens.user_name";
+    public static final String EXTRA_EMAIL = "sarojbardewa.com.cookhookpro.loginandsplashscreens.email";
     public static final String EXTRA_PASSWORD = "sarojbardewa.com.cookhookpro.loginandsplashscreens.password";
 
     // UI references
-    private EditText mUsernameView;
+    private EditText mEmailView;
     private EditText mPasswordView;
     private CheckBox mRememberCheckBox;
     private ProgressDialog dialog;
@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mUsernameView = (EditText) findViewById(R.id.username);
+        mEmailView = (EditText) findViewById(R.id.login_email);
         mPasswordView = (EditText) findViewById(R.id.password);
         mRememberCheckBox = (CheckBox) findViewById(R.id.remember_me_checkBox);
 
@@ -51,10 +51,10 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
         findViewById(R.id.create_account_button).setOnClickListener(this);
 
         Intent temp = getIntent();
-        String userName = temp.getStringExtra(EXTRA_USER_NAME);
+        String email = temp.getStringExtra(LoginActivity.EXTRA_EMAIL);
         String password = temp.getStringExtra(EXTRA_PASSWORD);
-        if(userName != null && password != null) {
-            mUsernameView.setText(userName);
+        if(email != null && password != null) {
+            mEmailView.setText(email);
             mPasswordView.setText(password);
             Toast.makeText(getApplicationContext(), "Account Created Successfully", Toast.LENGTH_SHORT).show();
         }
@@ -76,14 +76,14 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
                 break;
             case R.id.email_sign_in_button:
                 // Code below gets the User name and Password
-                String userName = mUsernameView.getText().toString();
+                String email = mEmailView.getText().toString();
                 String password = mPasswordView.getText().toString();
 
                 UserProfile profile = UserProfile.getInstance();
                 try
                 {
                     //TODO: Might need to move this to a thread if it takes too long
-                    profile.Login(userName, password, this);
+                    profile.Login(email, password, this);
                     dialog = new ProgressDialog(this);
                     dialog.setTitle("Logging In...");
                     dialog.show();
@@ -103,9 +103,9 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
         dialog.dismiss();
         if(task.isSuccessful()) {
             if (mRememberCheckBox.isChecked()) {
-                String userName = mUsernameView.getText().toString();
+                String email = mEmailView.getText().toString();
                 String password = mPasswordView.getText().toString();
-                SharedPreferenceHelper.getInstance(this).SaveCredentials(userName, password);
+                SharedPreferenceHelper.getInstance(this).SaveCredentials(email, password);
             }
             StartMainActivity();
         } else {
