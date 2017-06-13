@@ -3,6 +3,7 @@ package sarojbardewa.com.cookhookpro.mainrecipescreen;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -186,11 +187,16 @@ public class RecipeActivity extends AppCompatActivity
         } else if (id == R.id.sign_out) {
             UserProfile.getInstance().LogoutAndGoToLoginScreen(this);
         } else if (id == R.id.nav_share) {
-            Toast.makeText(this, "Feature coming soon!",Toast.LENGTH_SHORT).show();
+            // Open the app store for our app
+            Uri webpage = Uri.parse("https://play.google.com/store");
+            Intent appStore = new Intent(Intent.ACTION_VIEW, webpage);
+            startActivity(appStore);
 
         } else if (id == R.id.nav_send) {
-            Toast.makeText(this, "Feature coming soon!",Toast.LENGTH_SHORT).show();
-
+            //Send email to the developers
+            Uri number = Uri.parse ("tel:5034819854");
+           Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
+            startActivity(callIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
