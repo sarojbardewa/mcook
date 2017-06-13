@@ -14,9 +14,10 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/imageView_user"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:src="@drawable/ic_account_circle_black_24dp" />
         <!--app:srcCompat="@android:drawable/sym_def_app_icon"/>-->

@@ -38,14 +38,15 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference mReference;
     private String mURL;
     private TextView mName, mLocation, mFavRec, mDietary;
-    private String name, location, favrec, dietary;
     private Context mContext = ProfileActivity.this;
+    private Context userIconContext;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_own);
+
         mImageView = (ImageView) findViewById(R.id.imgProfilePic);
         mImageView.setImageResource(R.drawable.pic1);
 
@@ -70,7 +71,6 @@ public class ProfileActivity extends AppCompatActivity {
                     mFavRec.setText(profileupload.getFavrec());
                     mDietary.setText(profileupload.getDietary());
                     mURL = profileupload.getUrl();
-
                     Glide.with(mContext).load(mURL).into(mImageView);
                 }
             }

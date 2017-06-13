@@ -1,6 +1,7 @@
 package sarojbardewa.com.cookhookpro.mainrecipescreen;
 
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -23,14 +24,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import sarojbardewa.com.cookhookpro.ProfileActivity.ProfileActivity;
+import sarojbardewa.com.cookhookpro.ProfileUpdateActivity.ProfileUpload;
 import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.loginandsplashscreens.UserProfile;
 import sarojbardewa.com.cookhookpro.newrecipe.NewRecipeActivity;
@@ -47,20 +53,27 @@ public class RecipeActivity extends AppCompatActivity
     private DatabaseReference mDatabaseRef;
     public static final String STORAGE_PATH = "image/";
     private final static String TAG = "RecipeActivity";
+    ImageView userIconView;
+    Context mContext;
 
     private RecipeModel desRecipeModel;  // For passing to recipe description fragment
     int recipePosition;
 
+    public Context getActivityContext(){
+        return RecipeActivity.this;
+    }
 
     //******************
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+        mContext = getActivityContext();
 
         // Create references to the database and image file
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
+
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -93,11 +106,29 @@ public class RecipeActivity extends AppCompatActivity
         View nav_header = LayoutInflater.from(this).inflate(R.layout.user_loggedin, null);
         ((TextView) nav_header.findViewById(R.id.header_user)).setText(userName);
         ((TextView) nav_header.findViewById(R.id.header_email)).setText(email);
+        userIconView = ((ImageView) nav_header.findViewById(R.id.imageView_user));
         navigationView.addHeaderView(nav_header);
 
+        // Add user photo on his/her navigation icon
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String PATH = "user" + "/" + uid;
 
+        FirebaseDatabase.getInstance().getReference(PATH).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ProfileUpload profileUpload = dataSnapshot.getValue(ProfileUpload.class);
+                if(profileUpload !=null){
+                    Log.d("onDataChangeIMAGE", ""+profileUpload.url );
+                    Glide.with(mContext).load(profileUpload.url).into(userIconView);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
