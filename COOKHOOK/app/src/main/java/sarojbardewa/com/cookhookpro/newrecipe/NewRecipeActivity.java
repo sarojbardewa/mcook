@@ -40,8 +40,16 @@ import sarojbardewa.com.cookhookpro.R;
 import static android.util.Log.i;
 import static sarojbardewa.com.cookhookpro.R.id.imagename_edittext;
 
+/**
+ * This is the main activity that gets the inputs of a new
+ * recipe and uploads it to the Firebase database
+ * @author Saroj Bardewa
+ * @since May 29th, 2017
+ */
 
 public class NewRecipeActivity extends AppCompatActivity {
+
+    // Declare the fields
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
     private ImageView mImageView;
@@ -50,16 +58,12 @@ public class NewRecipeActivity extends AppCompatActivity {
     private EditText mDescription;
     private List<String> ingredientList;
     private List<String > directionList;
-
-
     private Uri imgUri;
     private ProgressDialog dialog;
     String myUserId;
 
     private static final String TAG ="NewRecipeActivity";
-
     private static final String KEY_INDEX = "all_data";
-
     public static final String STORAGE_PATH = "image/";
     public static  final  int REQUEST_CODE = 000;
     private static final int REQUEST_INGREDIENT_CODE = 100;
@@ -71,6 +75,7 @@ public class NewRecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTitle("Add New Recipe");
         setContentView(R.layout.activity_new_recipe);
+        // Reference to the widgets
         mImageView = (ImageView)findViewById(R.id.imageView);
         mRecipeName = (EditText) findViewById(imagename_edittext);
         mTotaltime = (EditText)findViewById(R.id.time_edittext);
@@ -82,9 +87,13 @@ public class NewRecipeActivity extends AppCompatActivity {
         Log.d(TAG,"CurrentUserID :" + myUserId);
         directionList = new ArrayList<>();
         //Get the uri if saved before and display the image
+        // This is used when the screen is rotated
         if(savedInstanceState !=null){
+            // Retrieve the uri saved. This will allow us to preserve the
+            // image when the screen is rotated
             imgUri = savedInstanceState.getParcelable(KEY_INDEX);
             try{
+                // Get the image from the device image storage
                 Bitmap bm = MediaStore.Images.Media.getBitmap(getContentResolver(), imgUri);
                 mImageView.setImageBitmap(bm);
             } catch (FileNotFoundException e) {
@@ -93,11 +102,14 @@ public class NewRecipeActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        // Get references to the firebase database and storage
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
     }
 
+    // Create folder in the firebase database to save all the
+    // recipe photos
     public void onAddImageButtonClick(View v) {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -138,7 +150,7 @@ public class NewRecipeActivity extends AppCompatActivity {
         }
 
 
-        // Get the ingrediants
+        // Get the ingredients
         if(requestCode==REQUEST_INGREDIENT_CODE && resultCode== RESULT_OK ){
 
             if (data !=null) {
@@ -164,6 +176,11 @@ public class NewRecipeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Get the extension of the image
+     * @param uri
+     * @return
+     */
 
     public String getImageExt (Uri uri){
         ContentResolver contentResolver = getContentResolver();
@@ -174,6 +191,7 @@ public class NewRecipeActivity extends AppCompatActivity {
 
     /**
      * For the Publish recipe button
+     * Only when all the fields in the new recipe are ready, we can upload the recipe.
      */
     @SuppressWarnings("VisibleForTests")
     public void onPublishRecipeClick( View view) {
@@ -204,6 +222,7 @@ public class NewRecipeActivity extends AppCompatActivity {
         // Display success toast messgae
         Toast.makeText(getApplicationContext(), " Recipe Upload Successful", Toast.LENGTH_SHORT).show();
 
+                // Add the fields to an RecipeModel object
         RecipeModel recipeModel = new RecipeModel(mRecipeName.getText().toString(),
                 taskSnapshot.getDownloadUrl().toString(),
                 mDescription.getText().toString(),
@@ -238,6 +257,8 @@ public class NewRecipeActivity extends AppCompatActivity {
         });
 
         } else {
+            // If any of the field in the new recipe upload is empty,
+            // display an error.
             String message = "";
             if (imgUri == null) {
                 message = " <select an image>";
@@ -265,7 +286,8 @@ public class NewRecipeActivity extends AppCompatActivity {
     }
 
     /**
-     * Add ingredients
+     * Add ingredients by calling an intent, when ADD INGREDIENTS button
+     * is pressed.
      */
 
     public void addIngredients(View v){
@@ -274,7 +296,10 @@ public class NewRecipeActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Allow user to add cooking directions by calling an intent
+     * @param v
+     */
     public void addDirections(View v){
         i("RECIPE","addDirections() called");
         Intent intent = new Intent(this, DirectionsListActivity.class);
