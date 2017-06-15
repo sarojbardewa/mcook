@@ -3,9 +3,7 @@ package sarojbardewa.com.cookhookpro.shoppinglist;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 
@@ -16,10 +14,14 @@ import java.util.List;
 import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.loginandsplashscreens.CheckBoxArrayAdapter;
 import sarojbardewa.com.cookhookpro.loginandsplashscreens.CheckBoxDataContainer;
-import sarojbardewa.com.cookhookpro.loginandsplashscreens.Recipe;
-import sarojbardewa.com.cookhookpro.loginandsplashscreens.UserProfile;
 import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
+/**
+ * Created by Kyle on 6/11/2017.
+ */
 
+/**
+ * Activity which implements the Shopping List activity.
+ */
 public class ShoppingListActivity extends AppCompatActivity {
     private ListView mRecipeListView, mIngredientListView;
     private HashMap<String, RecipeModel> mRecipesInCart, mRecipes;
@@ -38,6 +40,9 @@ public class ShoppingListActivity extends AppCompatActivity {
         GetRecipeList();
     }
 
+    /**
+     * Updates the ingredients list view depending on the currently selected recipes.
+     */
     private void UpdateIngredientList()
     {
         ArrayList<CheckBoxDataContainer> ingredients = new ArrayList<>();
@@ -50,6 +55,10 @@ public class ShoppingListActivity extends AppCompatActivity {
             }
         }
         ArrayAdapter<CheckBox> ingredientBoxes = new CheckBoxArrayAdapter(getApplicationContext(), ingredients, new View.OnClickListener() {
+            /**
+             * Callback records which ingredients are checked so once the list changes, they can maintain their state.
+             * @param v The checkbox which is clicked.
+             */
             @Override
             public void onClick(View v) {
                 CheckBox box = (CheckBox) v;
@@ -60,6 +69,10 @@ public class ShoppingListActivity extends AppCompatActivity {
         mIngredientListView.setAdapter(ingredientBoxes);
     }
 
+    /**
+     * Gets the master list from the ShoppingList singleton and populates the recipe list view with
+     * names of recipes.
+     */
     private void GetRecipeList()
     {
         mRecipes = GetRecipes();
@@ -69,6 +82,11 @@ public class ShoppingListActivity extends AppCompatActivity {
             recipeNames.add(new CheckBoxDataContainer(recipeName, false));
         }
         ArrayAdapter<CheckBox> recipeBoxes = new CheckBoxArrayAdapter(getApplicationContext(), recipeNames, new View.OnClickListener() {
+
+            /**
+             * Callback to change the ingredients list depending on the currently selected recipes.
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 CheckBox box = (CheckBox) v;

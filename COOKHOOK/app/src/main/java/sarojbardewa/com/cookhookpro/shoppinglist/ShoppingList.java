@@ -10,6 +10,10 @@ import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
  * Created by Kyle on 6/11/2017.
  */
 
+/**
+ * Class is a singleton which contains all of the recipes added to the Shopping List... singleton
+ * is the ShoppingList.
+ */
 public class ShoppingList {
     private static final ShoppingList ourInstance = new ShoppingList();
     private List<RecipeModel> mRecipesInList;

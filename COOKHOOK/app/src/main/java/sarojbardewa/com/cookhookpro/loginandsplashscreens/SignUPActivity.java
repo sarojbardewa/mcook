@@ -16,6 +16,11 @@ import com.google.firebase.auth.AuthResult;
 import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.mainrecipescreen.RecipeActivity;
 
+/**
+ * This class was borrowed from Project 3's signup activity and adapted for our purposes.
+ * The GPS and local database code was removed, and replaced with firebase authentication and account creation.
+ */
+
 public class SignUPActivity extends AppCompatActivity implements OnCompleteListener<AuthResult>
 {
     EditText editTextUserName, editTextEmail, editTextPassword, editTextConfirmPassword;
@@ -58,6 +63,9 @@ public class SignUPActivity extends AppCompatActivity implements OnCompleteListe
                 {
                     UserProfile user = UserProfile.getInstance();
                     try {
+                        //Similar to the login activity, create a progress dialog when login starts.
+                        //This activity implements the onCompleteListener interface, which is why "this"
+                        //is passed to the CreateAccount function.
                         user.CreateAccount(userName, email, password, SignUPActivity.this);
                         dialog = new ProgressDialog(SignUPActivity.this);
                         dialog.setTitle("Creating account...");
@@ -74,11 +82,12 @@ public class SignUPActivity extends AppCompatActivity implements OnCompleteListe
     @Override
     public void onComplete(Task<AuthResult> task)
     {
+        //Dismiss the progress dialog when the login task is completed
         dialog.dismiss();
         if(task.isSuccessful())
         {
             String email = editTextEmail.getText().toString();
-            String password=editTextPassword.getText().toString();
+            String password = editTextPassword.getText().toString();
             Intent temp = new Intent(getApplicationContext(), LoginActivity.class);
             temp.putExtra(LoginActivity.EXTRA_EMAIL, email);
             temp.putExtra(LoginActivity.EXTRA_PASSWORD, password);

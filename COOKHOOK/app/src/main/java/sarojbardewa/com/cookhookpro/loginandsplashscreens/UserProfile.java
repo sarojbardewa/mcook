@@ -16,6 +16,10 @@ import com.google.firebase.auth.UserProfileChangeRequest;
  * Created by Kyle on 6/10/2017.
  */
 
+/**
+ * Helper class meant to deal with account creation, login, and account details. It's a singleton,
+ * and a thin wrapper around the FirebaseAuth class.
+ */
 public class UserProfile {
     private static final UserProfile ourInstance = new UserProfile();
     private boolean mIsLoggedIn;
@@ -40,10 +44,17 @@ public class UserProfile {
             throw new Exception("Already logged in");
         }
 
-        //TODO: Code to login to firebase
+
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+            /**
+             * This callback intercepts the onComplete() callback to record information, then calls the listener passed to the function.
+             *
+             * @param task The result of the logging in task.
+             */
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                //This onComplete
                 if(task.isSuccessful())
                 {
                     mIsLoggedIn = true;
@@ -65,6 +76,14 @@ public class UserProfile {
         }
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+            /**
+             * This callback gets a little tricky. Since account creation and updating the profile name are two
+             * different steps, there is a nested callback which, on successful login, will update the display name
+             * of the Firebase user profile, then call the onCompleteListener passed to this function. If anything fails,
+             * the listener passed to this function is called earlier.
+             * @param task
+             */
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 final Task<AuthResult> createAccountTask = task;
@@ -73,6 +92,10 @@ public class UserProfile {
                     mAuth.getCurrentUser().updateProfile(new UserProfileChangeRequest.Builder().setDisplayName(username).build())
                             .addOnCompleteListener(new OnCompleteListener<Void>()
                     {
+                        /**
+                         * The nested listener finally calls the listener passed to the CreateAccount function.
+                         * @param task
+                         */
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             listener.onComplete(createAccountTask);
@@ -81,6 +104,9 @@ public class UserProfile {
                 }
                 else
                 {
+                    /**
+                     * On failure, just call the listener passed to CreateAccount() to notify the listener that the operation failed.
+                     */
                     listener.onComplete(createAccountTask);
                 }
             }
@@ -103,6 +129,10 @@ public class UserProfile {
         mIsLoggedIn = false;
     }
 
+    /**
+     * Public helper function so that any activity may call this function to return to the login screen.
+     * @param activity
+     */
     public void LogoutAndGoToLoginScreen(Activity activity)
     {
         Logout();

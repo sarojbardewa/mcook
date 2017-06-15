@@ -8,20 +8,18 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import sarojbardewa.com.cookhookpro.R;
 
 /**
- * Created by Kyle on 6/11/2017.
+ * @brief Custom array adapter class to handle checkboxes. Meant for ListViews in the ShoppingList activity.
  */
-
 public class CheckBoxArrayAdapter extends ArrayAdapter<CheckBox> {
 
     private ArrayList<CheckBoxDataContainer> mItems;
     private Context mContext;
     private View.OnClickListener mClickListener;
+
     public CheckBoxArrayAdapter(Context context, ArrayList<CheckBoxDataContainer> items, View.OnClickListener listener)
     {
         super(context, R.layout.checkbox_in_listview);

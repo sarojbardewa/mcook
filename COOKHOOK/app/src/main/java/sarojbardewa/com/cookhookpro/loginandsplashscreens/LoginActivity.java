@@ -19,6 +19,8 @@ import sarojbardewa.com.cookhookpro.mainrecipescreen.RecipeActivity;
 
 /**
  * Created by Hiral on 7/28/2016.
+ * Kyle - Starter code borrowed from Project 3, modified for our purposes to include Firebase Account
+ *  authentication.
  */
 
 /**
@@ -34,8 +36,6 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
     private EditText mPasswordView;
     private CheckBox mRememberCheckBox;
     private ProgressDialog dialog;
-    private static String mUsername;
-    private static String mPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,9 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
         findViewById(R.id.email_sign_in_button).setOnClickListener(this);
         findViewById(R.id.create_account_button).setOnClickListener(this);
 
+        //It's possible that the LoginActivity launched this app in addition to the splash screen.
+        //Check to see if an email and password were passed as extras through the Intent so that the
+        //email/password fields may be auto-populated with the credentials of the account which was just created.
         Intent temp = getIntent();
         String email = temp.getStringExtra(LoginActivity.EXTRA_EMAIL);
         String password = temp.getStringExtra(EXTRA_PASSWORD);
@@ -58,13 +61,6 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
             mPasswordView.setText(password);
             Toast.makeText(getApplicationContext(), "Account Created Successfully", Toast.LENGTH_SHORT).show();
         }
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                UserProfile.getInstance().Logout();
-            }
-        });
     }
 
     @Override
@@ -82,7 +78,11 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
                 UserProfile profile = UserProfile.getInstance();
                 try
                 {
-                    //TODO: Might need to move this to a thread if it takes too long
+                    /**
+                     * Passing in "this" registers the onComplete callback defined in this class.
+                     * Once the login process is started in the background, a progress dialog is
+                     * launched, and will remain active until the callback is called.
+                     */
                     profile.Login(email, password, this);
                     dialog = new ProgressDialog(this);
                     dialog.setTitle("Logging In...");
@@ -100,6 +100,9 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
     @Override
     public void onComplete(Task<AuthResult> task)
     {
+        /**
+         * First thing to do is dismiss the progress dialog, since the login request just completed.
+         */
         dialog.dismiss();
         if(task.isSuccessful()) {
             if (mRememberCheckBox.isChecked()) {
@@ -123,7 +126,6 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
 
     private void StartMainActivity()
     {
-        //TODO: Launch main activity
         Intent temp = new Intent(getApplicationContext(), RecipeActivity.class);
         startActivity(temp);
         finish();

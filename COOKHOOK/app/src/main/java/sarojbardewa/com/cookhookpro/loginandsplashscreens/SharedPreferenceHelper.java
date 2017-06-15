@@ -8,6 +8,9 @@ import android.content.SharedPreferences;
  * Created by Kyle on 6/10/2017.
  */
 
+/**
+ * Class to help store and retrieve data from SharedPreferences. Implemented as a singleton.
+ */
 public class SharedPreferenceHelper {
     private static final SharedPreferenceHelper ourInstance = new SharedPreferenceHelper();
     private Activity mActivity;
