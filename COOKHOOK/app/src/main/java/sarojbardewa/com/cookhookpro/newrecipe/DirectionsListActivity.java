@@ -32,6 +32,12 @@ import java.util.Set;
 
 import sarojbardewa.com.cookhookpro.R;
 
+/**
+ * This is the class that allows user to add cooking directions.
+ * The variables are saved as a list of string.
+ * @author : Saroj Bardewa
+ * @since : May 29th, 2017
+ */
 
 public class DirectionsListActivity extends AppCompatActivity {
     ArrayList<String> directionList = null;
@@ -40,6 +46,12 @@ public class DirectionsListActivity extends AppCompatActivity {
     private static final String  TAG = "DirectionsListActivity";
     private static final String EXTRA_DIRECTIONS = "edu.pdx.ece558sp17group3.ingredientlist.directions";
 
+
+    /**
+     * In the oncreate method, inflate the layout and retrieve data
+     * if saved earlier
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +80,11 @@ public class DirectionsListActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * This is the floating button that will prompt user to add new directions with
+         * step number and direction
+         */
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +97,7 @@ public class DirectionsListActivity extends AppCompatActivity {
         setReturnDirectionsList(directionList);
     }
 
+    // Inflate the layout
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -94,34 +112,9 @@ public class DirectionsListActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
-        /**
-         * WHen the action_add is clicked, user
-         */
-//        if (id==R.id.action_add){
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            builder.setTitle("Add Item");
-//            final EditText input = new EditText(this);
-//            builder.setView(input);
-//            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    directionList.add(preferredCase(input.getText().toString()));
-//                    Collections.sort(directionList);
-//                    // Store the store values in the memory
-//                    storeArrayVal(directionList, getApplicationContext());
-//                    lv.setAdapter(adapter);
-//                }
-//            });
-//            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    dialog.cancel();
-//                }
-//            });
-//            builder.show();
-//            return true;
-//        }
+        // If the clear action back is selected, we can give option for them
+        // to confirm if they want to delete before deleting.
+        // A dialog box is shown for that purpose.
 
         if (id == R.id.action_clear) {
 
@@ -145,6 +138,14 @@ public class DirectionsListActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * This is the method that allows user to save their directions without
+     * loss. For instance, a user might wasnt to come back and edit their ingredient
+     * list once created.
+     * @param inArrayList
+     * @param context
+     */
 
     public static void storeArrayVal(ArrayList<String> inArrayList, Context context) {
         // Set is a collection
@@ -237,7 +238,6 @@ public class DirectionsListActivity extends AppCompatActivity {
 
         // The following are the fields in the dialogbox
         final EditText mStep = new EditText(context);
-        //mStep.setBackground(ContextCompat.getDrawable(context, R.drawable.style_edittext));
         final EditText mDirection = new EditText(context);
         mDirection.setBackground(ContextCompat.getDrawable(context, R.drawable.style_edittext));
 
@@ -254,6 +254,10 @@ public class DirectionsListActivity extends AppCompatActivity {
         layout.addView(mStep);
         layout.addView(mDirection);
         builder.setView(layout);
+
+        // When the okay button is pressed, based on whether
+        // te user click on edit text or delete, take the respective action
+
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -316,7 +320,7 @@ public class DirectionsListActivity extends AppCompatActivity {
     /**
      *  This starts an intent to pass result back to its calling
      *  activity
-     * @param mIngredientList - Array of ingrediant list
+     * @param setReturnDirectionsList - Array of cooking directions list
      */
     private  void setReturnDirectionsList(ArrayList<String> mIngredientList){
         Intent data = new Intent();

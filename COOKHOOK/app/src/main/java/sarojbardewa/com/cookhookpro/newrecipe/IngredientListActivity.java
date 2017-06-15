@@ -30,17 +30,25 @@ import java.util.Set;
 
 import sarojbardewa.com.cookhookpro.R;
 
+/**
+ * This is the class that allows users to add ingredients
+ * on the new recipe they are creating.
+ * @author Saroj Bardewa
+ * @since May 29th, 2017
+ */
+
 public class IngredientListActivity extends AppCompatActivity {
     ArrayList<String> ingredientList = null;
     ArrayAdapter<String> adapter = null;
     ListView lv = null;
     private static final String  TAG = "IngredientListActivity";
-//    private int mDialog = 0;
-//    private int position = -1;
-
     private static final String EXTRA_INGREDLIST = "edu.pdx.ece558sp17group3.ingredientlist.extra";
 
-
+    /**
+     * In the oncreate method, inflate the layout and retrieve data
+     * if saved earlier
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +70,8 @@ public class IngredientListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView parent, View view, final int position, long id) {
                 String selectedItem = ((TextView) view).getText().toString();
                 if (selectedItem.trim().equals(ingredientList.get(position).trim())) {
+                    // If user no longer would like to keep the ingredients they added
+                    // to the list, they can clear it all by calling this method.
                     removeElement(selectedItem, position);
                 } else {
                     Toast.makeText(getApplicationContext(), "Error Removing Element", Toast.LENGTH_LONG).show();
@@ -69,6 +79,11 @@ public class IngredientListActivity extends AppCompatActivity {
             }
         });
 
+
+        /**
+         * This is the floating button that will prompt user to add new ingredents with
+         * quantity, unit and description fields when clicked.
+         */
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +97,7 @@ public class IngredientListActivity extends AppCompatActivity {
         setReturnIngrediantList(ingredientList);
     }
 
+    // Inflate the layout
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -96,34 +112,9 @@ public class IngredientListActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
-        /**
-         * WHen the action_add is clicked, user
-         */
-//        if (id==R.id.action_add){
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            builder.setTitle("Add Item");
-//            final EditText input = new EditText(this);
-//            builder.setView(input);
-//            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    ingredientList.add(preferredCase(input.getText().toString()));
-//                    Collections.sort(ingredientList);
-//                    // Store the store values in the memory
-//                    storeArrayVal(ingredientList, getApplicationContext());
-//                    lv.setAdapter(adapter);
-//                }
-//            });
-//            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    dialog.cancel();
-//                }
-//            });
-//            builder.show();
-//            return true;
-//        }
+        // If the clear action back is selected, we can give option for them
+        // to confirm if they want to delete before deleting.
+        // A dialog box is shown for that purpose.
 
         if (id == R.id.action_clear) {
 
@@ -148,6 +139,13 @@ public class IngredientListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * This is the method that allows user to save their ingredients without
+     * loss. For instance, a user might wasnt to come back and edit their ingredient
+     * list once created.
+     * @param inArrayList
+     * @param context
+     */
     public static void storeArrayVal(ArrayList<String> inArrayList, Context context) {
         // Set is a collection
         Set<String> WhatToWrite = new HashSet<String>(inArrayList);
@@ -264,6 +262,9 @@ public class IngredientListActivity extends AppCompatActivity {
 
         builder.setView(layout);
 
+        // When the okay button is pressed, based on whether
+        // te user click on edit text or delete, take the respective action
+
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -299,21 +300,6 @@ public class IngredientListActivity extends AppCompatActivity {
 
 
 
-
-//    /**
-//     * Override the onSaveInstanceState, needed while user changes the orientation.
-//     * Without this method, if user was adding a recipe image, it would be lost
-//     */
-//    @Override
-//    public void onSaveInstanceState(Bundle savedInstanceState){
-//        super.onSaveInstanceState(savedInstanceState);
-//        savedInstanceState.putInt("MY_DIALOG_INDEX",mDialog);  // Save the ImageUri
-//        savedInstanceState.putInt("MY_LIST_INDEX",position);  // Save the ImageUri
-//    }
-//
-
-
-
     /**
      *  This starts an intent to pass result back to its calling
      *  activity
@@ -324,11 +310,6 @@ public class IngredientListActivity extends AppCompatActivity {
         data.putExtra(EXTRA_INGREDLIST, mIngredientList);
         setResult(RESULT_OK,data);
     }
-
-    /**
-     * Return the arraylist to the parent activity
-     * @return
-     */
 
     @Override
     public void onBackPressed(){
