@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * Created by Jim on 12/29/2015.
+ * This is the onClick listenere method.
  */
 public class RecyclerItemClickListener extends RecyclerView.SimpleOnItemTouchListener {
     private OnItemClickListener mListener;
@@ -17,6 +17,12 @@ public class RecyclerItemClickListener extends RecyclerView.SimpleOnItemTouchLis
     }
 
     GestureDetector mGestureDetector;
+
+    /**
+     * OnClick listener for the recycler view
+     * @param context
+     * @param listener
+     */
 
     public RecyclerItemClickListener(Context context, OnItemClickListener listener) {
         mListener = listener;
@@ -28,6 +34,14 @@ public class RecyclerItemClickListener extends RecyclerView.SimpleOnItemTouchLis
         });
     }
 
+    /**
+     * Implement this method to intercept all touch screen motion events.
+     * This allows you to watch events as they are dispatched to your children,
+     * and take ownership of the current gesture at any point.
+     * @param view
+     * @param e
+     * @return
+     */
     @Override
     public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
         if(mGestureDetector.onTouchEvent(e)) {

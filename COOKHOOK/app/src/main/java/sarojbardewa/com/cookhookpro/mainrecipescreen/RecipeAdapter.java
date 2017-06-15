@@ -13,13 +13,23 @@ import com.bumptech.glide.Glide;
 import sarojbardewa.com.cookhookpro.R;
 
 /**
- * Created by Jim on 12/29/2015.
+ * This recipe adapter manages the recipe list and description fragments.
+ * The main RecipeActivity calls this adapter to launch the fragment.
+ * The RecipeListFragment implements a recycler view.
+ * @author : Saroj Bardewa
+ * @since  : May 29th, 2017
  */
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
     private String[] mTitles;
     private String [] mImageResourceIds;
     Context mContext;
 
+    /**
+     * Constructor of the fragment adapter
+     * @param titles  - Title of the recipe list
+     * @param imageResourceIds  - URL to the database image
+     * @param context       - Context of the activity
+     */
     public RecipeAdapter(String[] titles, String[] imageResourceIds, Context context) {
         mTitles = titles;
         mImageResourceIds = imageResourceIds;
@@ -27,6 +37,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     }
 
+    /**
+     *  This inflates the recycler view  for the recipe list
+     * @param parent  - Parent activity
+     * @param viewType - and int
+     * @return - nul
+     */
     @Override
     public RecipeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                        int viewType) {
@@ -37,18 +53,21 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         return vh;
     }
 
+    /**
+     * For each recycler view object, add the image of the recipe and
+     * its description
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mTextView.setText(mTitles[position]);
-       // holder.mTextView.setTransitionName("title_text_" + position);
         /**
          * Use Glide to display the recipe image.
          */
         Glide.with(mContext)
                 .load(mImageResourceIds[position])
                 .into(holder.mImageView);
-
-       // holder.mImageView.setTransitionName("recipe_image_" + position);
 
     }
 

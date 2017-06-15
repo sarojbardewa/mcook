@@ -3,7 +3,6 @@ package sarojbardewa.com.cookhookpro.mainrecipescreen;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,22 +22,25 @@ import java.util.List;
 import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
 
+/**
+ * This is the fragment that shows the list of recipes to the user.
+ * @author : Saroj Bardewa
+ * @since : May 29th, 2017
+ */
 
-// This uses recycler view to display the list of recipes
+
 public class RecipeListFragment extends Fragment {
-
-    //**********
     // Get access to the database
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mDatabaseReference = database.getReference();
 
+    // Create variables to hold the fields retrieved from the database.
     List<RecipeModel> recipeList;
     String[] mTitles;
     String [] mImageResourceIds;
 
 
-
-    // TODO: Rename and change types of parameters
+    // Instantiate the interface
     private OnSelectedRecipeChangeListener mListener;
 
     private RecyclerView mRecyclerView;
@@ -48,23 +50,9 @@ public class RecipeListFragment extends Fragment {
     List <String> mTitlesList = new ArrayList<String>();
     List <String> mImageIDList = new ArrayList<String>();
 
-//    private int[] mImageResourceIds = {
-//            R.drawable.maryland_fried_chicken_with_creamy_gravy_tc,
-//            R.drawable.chicken_nuggets_tc,
-//            R.drawable.grilled_chicken_salad_wraps_tc,
-//            R.drawable.swiss_potato_breakfast_casserole_tc
-//    };
-
-    //**** As per the suggestion from SO
-    CoordinatorLayout.Behavior behavior;
-    //***
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment RecipeListFragment.
+     * Create the fragment with the provided arguments
      */
-    // TODO: Rename and change types and number of parameters
     public static RecipeListFragment newInstance() {
         RecipeListFragment fragment = new RecipeListFragment();
         Bundle args = new Bundle();
@@ -77,25 +65,26 @@ public class RecipeListFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * This is the method that communicates with the database
+     * everytime it is evoked. This way all the recipe data
+     * is in sync and inflate the layout in a recycler view.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         // Get reference to the database
         database = FirebaseDatabase.getInstance();
         mDatabaseReference = database.getReference();
 
-        // This holds the array list of recipe titles
-
         // Create a list of RecipeModel, which will be used to store
         // the contents of RecipeModel objects retrived from the database
          recipeList = new ArrayList<RecipeModel>();
-        /**
-         * Get the database
-         * This method will be evoked any time the data on the database changes.
-         */
 
+         // Get the database
+         // This method will be evoked any time the data on the database changes.
         mDatabaseReference.child("recipes").addValueEventListener(new ValueEventListener() {
             //dataShot is the data at the point in time.
             @Override
@@ -121,9 +110,7 @@ public class RecipeListFragment extends Fragment {
                 // that the adapter will use string of Image URL's
                 mImageResourceIds = mImageIDList.toArray(new String [0]);
 
-                /**
-                 * Pass the
-                 */
+                // Pass the information to the adapter
                 mAdapter = new RecipeAdapter(mTitles, mImageResourceIds, getActivity());
                 mRecyclerView.setAdapter(mAdapter);
             }
@@ -174,6 +161,10 @@ public class RecipeListFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * This method is called once the fragment is associated with its activity.
+     * @param activity
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -186,6 +177,11 @@ public class RecipeListFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
+    /**
+     * This method is called immediately prior to the fragment no longer
+     * being associated with its activity.
+     */
 
     @Override
     public void onDetach() {

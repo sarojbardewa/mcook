@@ -262,20 +262,20 @@ public class RecipeActivity extends AppCompatActivity
 
         ChangeTransform changeTransformTransition = new ChangeTransform();
 
+        //Set up the transition of recipe list cards
         TransitionSet transitionSet = new TransitionSet();
         transitionSet.addTransition(changeBoundsTransition);
         transitionSet.addTransition(changeTransformTransition);
         transitionSet.setDuration(500);
 
         // Get handle to the recipe description fragment
-
         RecipeDescFragment recipeDescFragment =
                 RecipeDescFragment.newInstance(recipeModel); // Get the reference to the fragment
         recipeDescFragment.setEnterTransition(slideBottomTransition);
         recipeDescFragment.setAllowEnterTransitionOverlap(false);
         recipeDescFragment.setSharedElementEnterTransition(transitionSet);
 
-
+        // This calls the user profile
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.dashboard_content, recipeDescFragment)
