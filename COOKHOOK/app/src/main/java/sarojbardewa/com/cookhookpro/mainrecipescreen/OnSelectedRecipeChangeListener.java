@@ -7,6 +7,6 @@ import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
 /**
  * Created by Jim on 11/24/2015.
  */
-public interface OnSelectedBookChangeListener {
-    void onSelectedBookChanged(View view, int bookIndex, RecipeModel recipeModel);
+public interface OnSelectedRecipeChangeListener {
+    void onSelectedRecipeChanged(View view, int RecipeIndex, RecipeModel recipeModel);
 }

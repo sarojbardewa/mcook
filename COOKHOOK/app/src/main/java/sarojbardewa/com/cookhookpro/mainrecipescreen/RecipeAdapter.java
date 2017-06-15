@@ -48,7 +48,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                 .load(mImageResourceIds[position])
                 .into(holder.mImageView);
 
-       // holder.mImageView.setTransitionName("book_image_" + position);
+       // holder.mImageView.setTransitionName("recipe_image_" + position);
 
     }
 

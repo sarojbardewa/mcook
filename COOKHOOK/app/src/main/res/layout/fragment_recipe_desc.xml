@@ -20,18 +20,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:scaleType="fitStart"
-            android:transitionName="book_image"/>
-
-        <!--<ImageView-->
-        <!--android:scaleType="fitCenter"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/topImage"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_marginTop="@dimen/activity_vertical_margin"-->
-        <!--android:src="@drawable/maryland_fried_chicken_with_creamy_gravy_tc"-->
-        <!--android:transitionName="book_image"/>-->
+            android:transitionName="recipe_image"/>
 
         <!-- Create a linear layout to show time it takes to make the recipe and user
     information -->

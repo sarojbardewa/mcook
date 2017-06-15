@@ -1,5 +1,4 @@
 package sarojbardewa.com.cookhookpro.mainrecipescreen;
-
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
@@ -44,57 +43,72 @@ import sarojbardewa.com.cookhookpro.newrecipe.NewRecipeActivity;
 import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
 import sarojbardewa.com.cookhookpro.shoppinglist.ShoppingListActivity;
 
+/**
+ * <h1>Recipe Main Activity </h1>
+ * This is the recipe activity class that gets triggered after the
+ * user authentication is complete. The main purpose of this class
+ * is to host recipe list and recipe description fragments.
+ * This activity further has a navigation launcher bar that allows users to
+ * select other user functions such as select user's profile, find the favorite
+ * recipe and sign out.
+ * @author      : Saroj Bardewa
+ * @version     : v.01
+ * @since       :05-29-2017
+ */
 public class RecipeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnSelectedBookChangeListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        OnSelectedRecipeChangeListener {
 
-    private final static String MKEY = "ORIENTATION";
-    private final static String MINDEX = "RECIPE_INDEX";
-    private final static String MVIEW = "CURRENT_VIEW";
-    private StorageReference mStorageRef;
-    private DatabaseReference mDatabaseRef;
-    public static final String STORAGE_PATH = "image/";
+    private StorageReference mStorageRef;   // Firebase storage reference
+    private DatabaseReference mDatabaseRef; // Firebase database reference
     private final static String TAG = "RecipeActivity";
-    ImageView userIconView;
-    Context mContext;
-
+    private ImageView userIconView;
+    private Context mContext;
     private RecipeModel desRecipeModel;  // For passing to recipe description fragment
+
     int recipePosition;
 
+    /**
+     * This function returns the context of recipe activity
+     * @return Context - The context of RecipeActivity
+     */
     public Context getActivityContext(){
         return RecipeActivity.this;
     }
 
-    //******************
+    /**
+     * This function inflates the layout and hosts the fragment
+     * @param savedInstanceState - The value of saved variable on device configuration change
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
-        mContext = getActivityContext();
+        mContext = getActivityContext();  // Get the present activity context
 
         // Create references to the database and image file
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
-
-
+        // Set the toolbar and the navigation drawer layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // Set the transition of the list fragment from the left
+        // This will create an animation of the list fragment
         Slide slideLeftTransition = new Slide(Gravity.LEFT);
         slideLeftTransition.setDuration(500);
-
         RecipeListFragment listFragment = RecipeListFragment.newInstance();
         listFragment.setExitTransition(slideLeftTransition);
 
+        //Evoke the fragment manager to add listFragment to the existing activity
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction()
                 .add(R.id.dashboard_content, listFragment)
@@ -105,6 +119,8 @@ public class RecipeActivity extends AppCompatActivity
         String userName = user.getDisplayName();
         String email = user.getEmail();
         View nav_header = LayoutInflater.from(this).inflate(R.layout.user_loggedin, null);
+
+        // At the top of the navigation header, add the username and email of the current user
         ((TextView) nav_header.findViewById(R.id.header_user)).setText(userName);
         ((TextView) nav_header.findViewById(R.id.header_email)).setText(email);
         userIconView = ((ImageView) nav_header.findViewById(R.id.imageView_user));
@@ -112,17 +128,22 @@ public class RecipeActivity extends AppCompatActivity
 
         // Add user photo on his/her navigation icon
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String PATH = "user" + "/" + uid;
-
+        String PATH = "user" + "/" + uid;   // Create path to the user profile to access it.
         FirebaseDatabase.getInstance().getReference(PATH).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ProfileUpload profileUpload = dataSnapshot.getValue(ProfileUpload.class);
-                if(profileUpload !=null){
-                    Log.d("onDataChangeIMAGE", ""+profileUpload.url );
-                    Glide.with(mContext).load(profileUpload.url).into(userIconView);
-                }
+
+            /**
+             * Every time a user changes his/her image, the main recipe screen will be updated
+             * by their latest user-profile.
+             * @param dataSnapshot - The data at a particular point in time
+             */
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            ProfileUpload profileUpload = dataSnapshot.getValue(ProfileUpload.class);
+            if(profileUpload !=null){
+                Log.d("onDataChangeIMAGE", ""+profileUpload.url );
+                Glide.with(mContext).load(profileUpload.url).into(userIconView);
             }
+        }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -130,6 +151,10 @@ public class RecipeActivity extends AppCompatActivity
             }
         });
     }
+
+    /**
+     * The back press will close the navigation drawer in the main screen if it is open
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -140,6 +165,11 @@ public class RecipeActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * This displays the top bar menu
+     * @param menu  - Items in the top bar
+     * @return boolean - top bar shown or not shown
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -147,6 +177,12 @@ public class RecipeActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * When each button on the drawer is selected a new activity corresponding
+     * to that button is launched.
+     * @param item -An item in the navigative drawer
+     * @return boolean -true or false
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -168,23 +204,28 @@ public class RecipeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.my_profile) {
+            // When the MY PROFILE button is pressed, start the profile activity
+            // to show the profile
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
         } else if (id == R.id.following) {
+            // When the MY PROFILE button is pressed, show a message that
+            // this functionality is in progress
             Toast.makeText(this, "Feature coming soon!", Toast.LENGTH_SHORT).show();
 
-        }else if (id == R.id.favorites) {
-            Toast.makeText(this, "Feature coming soon!",Toast.LENGTH_SHORT).show();
-
         } else if (id == R.id.shopping_list) {
+            // When the Shopping List button is pressed, the items currently
+            // in the shopping list is displayed
             Intent intent = new Intent(this, ShoppingListActivity.class);
             startActivity(intent);
         } else if (id == R.id.new_recipe) {
+            // Upload New Recipe button when pressed allows user to add a new recipe
             Log.i(TAG, " new_recipe activity launched");
             Intent intent = new Intent(this, NewRecipeActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.sign_out) {
+            // The sign out button takes the user to the login screen
             UserProfile.getInstance().LogoutAndGoToLoginScreen(this);
         } else if (id == R.id.nav_share) {
             // Open the app store for our app
@@ -198,23 +239,22 @@ public class RecipeActivity extends AppCompatActivity
            Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
             startActivity(callIntent);
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    //************************
-    // TODO : When the recipe is selected, display the book
+
+   // When the recipe is selected, display the recipe
     @Override
-    public void onSelectedBookChanged(View view, int bookIndex, RecipeModel recipeModel) {
+    public void onSelectedRecipeChanged(View view, int recipeIndex, RecipeModel recipeModel) {
         desRecipeModel = recipeModel;  // Save the current recipe model for display
-        recipePosition = bookIndex;
+        recipePosition = recipeIndex;
 
         TextView titleTextView = (TextView) view.findViewById(R.id.recipeTitle);
-        ImageView bookImageView = (ImageView) view.findViewById(R.id.topImage);
+        ImageView recipeImageView = (ImageView) view.findViewById(R.id.topImage);
 
-        // Animate the book movements
+        // Animate the recipe movements
         Slide slideBottomTransition = new Slide(Gravity.BOTTOM);
         slideBottomTransition.setDuration(500);
 
@@ -239,8 +279,8 @@ public class RecipeActivity extends AppCompatActivity
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.dashboard_content, recipeDescFragment)
-                .addSharedElement(bookImageView, "book_image_" + bookIndex)
-                .addSharedElement(titleTextView, "title_text_" + bookIndex)
+                .addSharedElement(recipeImageView, "recipe_image_" + recipeIndex)
+                .addSharedElement(titleTextView, "title_text_" + recipeIndex)
                 .addToBackStack(null)
                 .commit();
 

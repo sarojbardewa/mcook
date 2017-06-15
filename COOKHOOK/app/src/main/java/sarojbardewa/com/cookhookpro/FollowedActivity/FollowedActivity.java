@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import sarojbardewa.com.cookhookpro.ProfileActivity.ProfileActivity;
 import sarojbardewa.com.cookhookpro.R;
+import sarojbardewa.com.cookhookpro.mainrecipescreen.RecipeActivity;
 import sarojbardewa.com.cookhookpro.profilehelper.User;
 
 /**
@@ -60,7 +60,7 @@ public class FollowedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //get and pass user id here
-                Intent intent = new Intent(FollowedActivity.this, ProfileActivity.class);
+                Intent intent = new Intent(FollowedActivity.this, RecipeActivity.class);
                 startActivity(intent);
             }
         });

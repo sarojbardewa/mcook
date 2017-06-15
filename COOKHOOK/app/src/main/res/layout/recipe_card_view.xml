@@ -32,7 +32,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:elevation="16dp"
-                android:transitionName="book_image"/>
+                android:transitionName="recipe_image"/>
 
             <TextView
                 android:id="@+id/recipeTitle"

@@ -14,17 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import sarojbardewa.com.cookhookpro.FollowedActivity.FollowedActivity;
-import sarojbardewa.com.cookhookpro.ProfileUpdateActivity.ProfileUpload;
 import sarojbardewa.com.cookhookpro.R;
-import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
 
 /**
  * Created by b on 6/12/17.
@@ -58,49 +49,7 @@ public class FollowActivity extends AppCompatActivity {
 
 
 
-        final FirebaseDatabase database1 = FirebaseDatabase.getInstance();
 
-        DatabaseReference refr = database1.getReference("recipes/");
-
-// Attach a listener to read the data at our posts reference
-        refr.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                RecipeModel uidupload = dataSnapshot.getValue(RecipeModel.class);
-                if (uidupload != null) {
-                    UID = uidupload.userID;
-
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-        //String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        String PATH = "user" + "/" ;
-        DatabaseReference ref = database.getReference("user/");
-
-// Attach a listener to read the data at our posts reference
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ProfileUpload profileupload = dataSnapshot.getValue(ProfileUpload.class);
-                if (profileupload != null) {
-                    mName.setText(profileupload.getName());
-                    mLocation.setText(profileupload.getLocation());
-                    mFavRec.setText(profileupload.getFavrec());
-                    mDietary.setText(profileupload.getDietary());
-                    mURL = profileupload.getUrl();
-                    Glide.with(FollowActivity.this).load(mURL).into(mImageView);
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
 
 
 

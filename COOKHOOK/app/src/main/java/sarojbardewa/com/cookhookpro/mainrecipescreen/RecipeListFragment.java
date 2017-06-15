@@ -24,7 +24,7 @@ import sarojbardewa.com.cookhookpro.R;
 import sarojbardewa.com.cookhookpro.newrecipe.RecipeModel;
 
 
-// This uses recycler view to display the list of books
+// This uses recycler view to display the list of recipes
 public class RecipeListFragment extends Fragment {
 
     //**********
@@ -39,7 +39,7 @@ public class RecipeListFragment extends Fragment {
 
 
     // TODO: Rename and change types of parameters
-    private OnSelectedBookChangeListener mListener;
+    private OnSelectedRecipeChangeListener mListener;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -87,8 +87,6 @@ public class RecipeListFragment extends Fragment {
         mDatabaseReference = database.getReference();
 
         // This holds the array list of recipe titles
-        //TODO:
-       // mTitles = getResources().getStringArray(R.array.book_titles);
 
         // Create a list of RecipeModel, which will be used to store
         // the contents of RecipeModel objects retrived from the database
@@ -150,7 +148,7 @@ public class RecipeListFragment extends Fragment {
         container.removeAllViews();  // Remove all paste fragments if any
         View rootView = inflater.inflate(R.layout.fragment_recipe_card, container, false);
 
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.book_recycler_view);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recipe_recycler_view);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -169,7 +167,7 @@ public class RecipeListFragment extends Fragment {
                         //Toast.makeText(getActivity(), mTitles[position], Toast.LENGTH_SHORT).show();
 
                         // Give back the position of the item selected
-                        mListener.onSelectedBookChanged(view, position,recipeList.get(position));
+                        mListener.onSelectedRecipeChanged(view, position,recipeList.get(position));
                     }
                 }));
 
@@ -182,7 +180,7 @@ public class RecipeListFragment extends Fragment {
         Log.i("FRAGMENT", "RecipeListFragment onAttach() called");
 
         try {
-            mListener = (OnSelectedBookChangeListener) activity;
+            mListener = (OnSelectedRecipeChangeListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -194,7 +192,7 @@ public class RecipeListFragment extends Fragment {
         super.onDetach();
         Log.i("FRAGMENT", "RecipeListFragment onDetach() called");
         mListener = null;
-        //*************
+
     }
 
 }

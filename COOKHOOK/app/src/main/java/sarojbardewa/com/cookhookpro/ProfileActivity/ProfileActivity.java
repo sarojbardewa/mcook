@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import sarojbardewa.com.cookhookpro.ProfileUpdateActivity.ProfileUpload;
 import sarojbardewa.com.cookhookpro.ProfileUpdateActivity.UpdateProfileActivity;
 import sarojbardewa.com.cookhookpro.R;
+import sarojbardewa.com.cookhookpro.mainrecipescreen.RecipeActivity;
 
 /**
  * Created by b on 6/11/17.
@@ -95,7 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //pass user info here
-                Intent intent = new Intent(ProfileActivity.this, UpdateProfileActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, RecipeActivity.class);
                 startActivity(intent);
             }
         });

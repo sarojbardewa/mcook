@@ -129,7 +129,7 @@ public class RecipeDescFragment extends Fragment{
              temp += s + "\n";
          }
          recipeDirections.setText(temp);
-         //topImageView.setTransitionName("book_image_" + position);
+         //topImageView.setTransitionName("recipe_image_" + position);
 
          /**
           * Add to the shopping list if user presses the shopping list button
