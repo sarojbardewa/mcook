@@ -32,11 +32,15 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:elevation="16dp"
+<<<<<<< HEAD:COOKHOOK/app/src/main/res/layout/book_card_view.xml
                 android:src="@drawable/maryland_fried_chicken_with_creamy_gravy_tc"
                 android:transitionName="book_image"/>
+=======
+                android:transitionName="recipe_image"/>
+>>>>>>> ecf27985b05afe292dc950fbd30b79318b404a0c:COOKHOOK/app/src/main/res/layout/recipe_card_view.xml
 
             <TextView
-                android:id="@+id/bookTitle"
+                android:id="@+id/recipeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"

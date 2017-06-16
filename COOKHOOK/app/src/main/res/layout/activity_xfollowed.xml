@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white">
+    <!--android:padding="8dp"-->
+    <RelativeLayout
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:background="@android:color/white">
+
+        <ImageView
+            android:id="@+id/imgProfilePic"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/images" />
+
+        <ImageButton
+            android:id="@+id/imgFloating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:padding="15dp"
+            android:background="@null"
+            android:src="@drawable/follow" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft ="50dp"
+        android:layout_marginTop="280dp"
+        android:text="NAME HERE"/>
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft ="50dp"
+        android:layout_marginTop="320dp"
+        android:text="Location"/>
+    <TextView
+        android:id="@+id/favrec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft ="50dp"
+        android:layout_marginTop="360dp"
+        android:text="Favorite Recipe"/>
+    <TextView
+        android:id="@+id/other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft ="50dp"
+        android:layout_marginTop="400dp"
+        android:text="Other INFO"/>
+
+    <Button
+        android:id="@+id/viewrecipes"
+        android:layout_width="200dp"
+        android:layout_height="140dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/foodbutton"
+        android:text="View Recipes"
+        android:textSize="38dp"
+        android:textStyle="bold"
+        android:textColor="#06A"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>
+
+</RelativeLayout>

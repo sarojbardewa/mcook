@@ -1,4 +1,4 @@
-package sarojbardewa.com.cookhook;
+package sarojbardewa.com.cookhookpro;
 
 import org.junit.Test;
 

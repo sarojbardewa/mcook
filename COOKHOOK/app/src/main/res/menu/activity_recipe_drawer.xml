@@ -7,13 +7,19 @@
             android:icon="@drawable/ic_face_black_24dp"
             android:title="My Profile"/>
         <item
-            android:id="@+id/favorites"
-            android:icon="@drawable/ic_favorite_black_24dp"
-            android:title="Favorites"/>
+            android:id="@+id/following"
+            android:icon="@drawable/ic_group_black_24dp"
+            android:title="Following"/>
+
         <item
             android:id="@+id/shopping_list"
             android:icon="@drawable/ic_local_grocery_store_black_24dp"
             android:title="Shopping List"/>
+
+        <item
+            android:id="@+id/new_recipe"
+            android:icon="@drawable/ic_recipe_upload_black_24dp"
+            android:title="Upload New Recipe"/>
 
         <item
             android:id="@+id/sign_out"

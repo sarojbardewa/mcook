@@ -1,35 +1,43 @@
 {
   "project_info": {
-    "project_number": "258029290980",
-    "firebase_url": "https://cookhook-7956b.firebaseio.com",
-    "project_id": "cookhook-7956b",
-    "storage_bucket": "cookhook-7956b.appspot.com"
+    "project_number": "901465321299",
+    "firebase_url": "https://cookhookpro.firebaseio.com",
+    "project_id": "cookhookpro",
+    "storage_bucket": "cookhookpro.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:258029290980:android:8591bbfb9d371956",
+        "mobilesdk_app_id": "1:901465321299:android:6fa22dc1f0a5a478",
         "android_client_info": {
-          "package_name": "sarojbardewa.com.cookhook"
+          "package_name": "sarojbardewa.com.cookhookpro"
         }
       },
       "oauth_client": [
         {
-          "client_id": "258029290980-u5qp155clnoc6e5shi4vfbcr4n8cusj1.apps.googleusercontent.com",
+          "client_id": "901465321299-3g3hrumfd4sd68b7dp83j42pll9697g7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "sarojbardewa.com.cookhook",
+            "package_name": "sarojbardewa.com.cookhookpro",
+            "certificate_hash": "9cb0753eda78689f55f0aeb6b4a242ee2c84274b"
+          }
+        },
+        {
+          "client_id": "901465321299-9tjj5kjieuee5ulgpu0mq58rn1vpgt82.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sarojbardewa.com.cookhookpro",
             "certificate_hash": "dc0d04be269ce0cbb868e50c0d8dcc7ab690f616"
           }
         },
         {
-          "client_id": "258029290980-g3ml7755clb5u06bhoeg8ofqo0uvdbv5.apps.googleusercontent.com",
+          "client_id": "901465321299-mmk332kmd2dfjd9svqooe5gi9bk0821c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCWIu5b5TmhNyE0-wysUXRJzqfCjn7zjvc"
+          "current_key": "AIzaSyB4S8CV9LzPChSKrndvijjUS_TlRuTDuMQ"
         }
       ],
       "services": {
@@ -40,7 +48,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "258029290980-g3ml7755clb5u06bhoeg8ofqo0uvdbv5.apps.googleusercontent.com",
+              "client_id": "901465321299-mmk332kmd2dfjd9svqooe5gi9bk0821c.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

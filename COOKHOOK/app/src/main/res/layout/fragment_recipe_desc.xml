@@ -1,0 +1,163 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="22dp">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin">
+        <!--android:paddingTop="@dimen/activity_vertical_margin"-->
+        <ImageView
+            android:id="@+id/topImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:scaleType="fitStart"
+            android:transitionName="recipe_image"/>
+
+        <!-- Create a linear layout to show time it takes to make the recipe and user
+    information -->
+        <LinearLayout
+            android:id="@+id/time_chef_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/topImage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingRight="1dp"
+                android:elevation="3dp"
+                android:text="Time :"
+                android:textAppearance="@style/TextAppearance.AppCompat"/>
+
+            <TextView
+                android:id="@+id/time_desp_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="2dp"
+                android:elevation="3dp"
+                android:textAppearance="@style/TextAppearance.AppCompat"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="3dp"
+                android:paddingRight="1dp"
+                android:text=" Recipe By :"
+                android:textAppearance="@style/TextAppearance.AppCompat"/>
+
+            <Button
+                android:id="@+id/recipe_by_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="User"/>
+
+        </LinearLayout>
+
+        <!-- Recipe Title -->
+        <TextView
+            android:id="@+id/recipeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/time_chef_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:gravity="center_horizontal"
+            android:text="Improving User Interface Design with Android Fragments"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/black"
+            android:transitionName="title_text"/>
+
+        <TextView
+            android:id="@+id/recipeDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recipeTitle"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:hint="Field for recipe description"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <!-- For Ingredients and add to shopping list section -->
+        <LinearLayout
+            android:id="@+id/ingredient_shoppinglist_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/recipeDescription"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Ingredients"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+            <TextView
+                android:id="@+id/ingredients_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="Ingredients"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black"
+                android:transitionName="title_text"/>
+        </LinearLayout>
+        <Button
+            android:layout_below="@+id/ingredient_shoppinglist_layout"
+            android:id="@+id/add_to_shoppinglist_button"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Add to shopping list"/>
+
+        <!-- Description Field -->
+        <LinearLayout
+            android:id="@+id/directions_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/add_to_shoppinglist_button"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Directions"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+            <TextView
+                android:id="@+id/directions_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="Directions"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black"
+                android:transitionName="title_text"/>
+        </LinearLayout>
+        <Button
+            android:layout_below="@+id/directions_layout"
+            android:id="@+id/start_cooking_button"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Start Cooking"/>
+
+    </RelativeLayout>
+</ScrollView>

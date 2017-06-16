@@ -1,4 +1,4 @@
-package sarojbardewa.com.cookhook;
+package sarojbardewa.com.cookhookpro;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
