@@ -32,7 +32,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:elevation="16dp"
-                android:src="@drawable/db_programming_top_card"
+                android:src="@drawable/maryland_fried_chicken_with_creamy_gravy_tc"
                 android:transitionName="book_image"/>
 
             <TextView

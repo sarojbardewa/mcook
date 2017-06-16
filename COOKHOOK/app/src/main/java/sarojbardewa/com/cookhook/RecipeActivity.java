@@ -27,10 +27,10 @@ public class RecipeActivity extends AppCompatActivity
     String[] mDescriptions;
 
     int[] mImageLargeResourceIds = {
-            R.drawable.db_programming_large,
-            R.drawable.dynamic_ui_large,
-            R.drawable.sys_dev_large,
-            R.drawable.and_engine_large
+            R.drawable.maryland_fried_chicken_with_creamy_gravy,
+            R.drawable.chicken_nuggets,
+            R.drawable.grilled_chicken_salad_wraps,
+            R.drawable.swiss_potato_breakfast_casserole
     };
     //******************
     @Override

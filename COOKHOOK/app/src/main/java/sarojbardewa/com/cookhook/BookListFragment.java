@@ -23,10 +23,10 @@ public class BookListFragment extends Fragment {
 
     private String[] mTitles;
     private int[] mImageResourceIds = {
-            R.drawable.db_programming_top_card,
-            R.drawable.dynamic_ui_top_card,
-            R.drawable.sys_dev_top_card,
-            R.drawable.and_engine_top_card
+            R.drawable.maryland_fried_chicken_with_creamy_gravy_tc,
+            R.drawable.chicken_nuggets_tc,
+            R.drawable.grilled_chicken_salad_wraps_tc,
+            R.drawable.swiss_potato_breakfast_casserole_tc
     };
 
     //**** As per the suggestion from SO
